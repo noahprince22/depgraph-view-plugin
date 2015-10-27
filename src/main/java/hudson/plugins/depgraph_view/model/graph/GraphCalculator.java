@@ -60,6 +60,8 @@ public class GraphCalculator {
         for (ProjectNode projectNode : fromProjects) {
             AbstractProject<?,?> project = projectNode.getProject();
             if (project.hasPermission(Item.READ)) {
+                System.out.println("BALL COLOR for " + project.getName() + " is " + project.getIconColor().toString());
+
                 for (EdgeProvider edgeProvider : edgeProviders) {
                     Iterables.addAll(newEdges, edgeProvider.getEdgesIncidentWith(project));
                 }

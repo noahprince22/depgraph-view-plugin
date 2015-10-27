@@ -40,6 +40,7 @@
 	      <l:tabBar>
 	            <l:tab name="graphviz" active="${true}" href="." />
 	            <l:tab name="jsplumb" active="${false}"  href="./jsplumb" />
+	            <l:tab name="sigmajs" active="${false}"  href="./jsplumb" />
 	      </l:tabBar>
 	      <img src="graph.png" lazymap="graph.map"/>
 	      <p>
