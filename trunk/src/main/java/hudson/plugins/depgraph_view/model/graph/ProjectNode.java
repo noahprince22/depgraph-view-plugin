@@ -44,6 +44,10 @@ public class ProjectNode {
         return project.getFullDisplayName();
     }
 
+    public String getColor() {
+      return project.getIconColor().toString();
+    }
+
     public AbstractProject<?, ?> getProject() {
         return project;
     }
