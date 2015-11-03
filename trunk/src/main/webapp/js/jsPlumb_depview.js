@@ -1,16 +1,15 @@
+function escapeId(id) {
+  // replace all characters except numbers and letters
+  // As soon as someone opens a bug that they have a problem with a name conflict
+  // rethink the strategy
+  return id.replace(/[^a-zA-Z0-9]/g,'-');
+}
+
+function getJobDiv(jobName) {
+  return jQuery('#' + escapeId(jobName));
+}
 
 (function() {
-    function escapeId(id) {
-        // replace all characters except numbers and letters
-        // As soon as someone opens a bug that they have a problem with a name conflict
-        // rethink the strategy
-        return id.replace(/[^a-zA-Z0-9]/g,'-');
-    }
-
-    function getJobDiv(jobName) {
-        return jQuery('#' + escapeId(jobName));
-    }
-
     window.depview = {
         paper: jQuery("#paper"),
         colordep: '#FF0000', // red
