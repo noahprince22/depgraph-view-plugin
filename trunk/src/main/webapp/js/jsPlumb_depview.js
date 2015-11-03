@@ -1,4 +1,4 @@
-;
+
 (function() {
     function escapeId(id) {
         // replace all characters except numbers and letters
