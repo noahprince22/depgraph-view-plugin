@@ -26,6 +26,6 @@ public class ProjectNodeTest {
 
     @Test
     public void getColorTest() {
-        String nodeC
+//        String nodeC
     }
 }
