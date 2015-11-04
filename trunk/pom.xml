@@ -170,12 +170,20 @@
             <goals>
               <goal>test</goal>
             </goals>
+          </execution>
+        </executions>
             <configuration>
               <jsSrcDir> src/main/webapp/js/ </jsSrcDir>
               <preloadSources>
-                <source> vendor/jquery.js </source>
+                <source> vendor/jquery.js </source> 
+                <source> vendor/jasmine-jquery.js </source> 
                 <source>jquery.jsPlumb-1.4.1-all-min.js</source>
+                <source> jsPlumb_depview.js </source>
               </preloadSources>
+              <sourceIncludes>
+                <include> vendor/jquery.js </include>
+              </sourceIncludes>
+              <debug>true</debug>
               <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
               <webDriverCapabilities>
                 <capability>
@@ -184,8 +192,7 @@
                 </capability>
               </webDriverCapabilities>
             </configuration>
-          </execution>
-        </executions>
+
       </plugin>
       <plugin>
           <groupId>org.jenkins-ci.tools</groupId>
