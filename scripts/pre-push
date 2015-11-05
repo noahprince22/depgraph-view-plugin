@@ -8,9 +8,9 @@ if [ "$branch_name" == "master" ]
    then
    # Add new files to svn
    echo "Adding new files to svn..."
-   for file in $(git diff --name-only --diff-filter=A origin/master HEAD~1); do
-       svn add $file
+   for file in $(git diff --name-only --diff-filter=A origin/master HEAD); do
        echo $file
+       svn add $file --parents
    done
 
    echo "Commiting to svn..."
