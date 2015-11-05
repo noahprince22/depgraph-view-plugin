@@ -74,7 +74,29 @@ function initWindow() {
               css('top', node.y + top).
               css('left', node.x + xOverall).
               appendTo(window.depview.paper);
+             document.getElementById(escapeId(node.name)).
+                addEventListener("contextmenu", function(e){
+                console.log("right clicked");
+                console.log(escapeId(node.name));
+                jQuery.contextMenu({
+                    selector: "#"+escapeId(node.name),
+                    callback: function(){ console.log("callback");},
+                    determinePosition: function($menu){
+                        $menu.css('display', 'block')
+                            .position({}).css('display','none');
+                    },
+                    items:{
+                        jim: {name: "jim", callback: function(){alert("JIM!!!");}},
+                        dave: { name: "dave", callback: function (){alert("DAVE!!!");}},
+                        one: {name: "one", callback: function(){alert("One");}},
+                        two: {name: "two", callback: function(){alert("TWO");}},
+                        three: {name: "three", callback: function(){alert("THREE");}}                               
+                    }
+                });
+                e.preventDefault();
+            });
           })
+            
           top = top + cluster.vSize + space
           // xOverall = xOverall + cluster.hSize + space
         });
