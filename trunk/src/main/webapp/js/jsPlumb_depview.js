@@ -76,27 +76,24 @@ function initWindow() {
               appendTo(window.depview.paper);
              document.getElementById(escapeId(node.name)).
                 addEventListener("contextmenu", function(e){
-                console.log("right clicked");
                 console.log(escapeId(node.name));
                 jQuery.contextMenu({
                     selector: "#"+escapeId(node.name),
-                    callback: function(){ console.log("callback");},
-                    determinePosition: function($menu){
-                        $menu.css('display', 'block')
-                            .position({}).css('display','none');
+                    position: function(opt, x, y){
+                        opt.$menu.css({position: "absolute", top: y, left: x});
                     },
                     items:{
                         jim: {name: "jim", callback: function(){alert("JIM!!!");}},
                         dave: { name: "dave", callback: function (){alert("DAVE!!!");}},
                         one: {name: "one", callback: function(){alert("One");}},
                         two: {name: "two", callback: function(){alert("TWO");}},
-                        three: {name: "three", callback: function(){alert("THREE");}}                               
+                        three: {name: "three", callback: function(){alert("THREE");}}
                     }
                 });
                 e.preventDefault();
             });
           })
-            
+
           top = top + cluster.vSize + space
           // xOverall = xOverall + cluster.hSize + space
         });
@@ -204,4 +201,3 @@ jsPlumb.bind("ready", function() {
   jsPlumb.setRenderMode(jsPlumb.SVG);
   depview.init();
 });
-
