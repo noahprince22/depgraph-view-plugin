@@ -39,6 +39,39 @@ describe("graph view", function() {
         succ(basicGraph);
       }
     });
+    spyOn(jsPlumb, "importDefaults").and.callFake(function(params) {
+      // do nothing, we're not testing jsPlumb right now
+    });
+    spyOn(jsPlumb, "makeSource").and.callFake(function(one, two) {
+      // do nothing, we're not testing jsPlumb right now
+    });
+    spyOn(jsPlumb, "makeTarget").and.callFake(function(one, two) {
+      // do nothing, we're not testing jsPlumb right now
+    });
+    spyOn(jsPlumb, "connect").and.callFake(function(one) {
+      // do nothing, we're not testing jsPlumb right now
+    });
+    spyOn(jsPlumb, "detach").and.callFake(function(one) {
+      // do nothing, we're not testing jsPlumb right now
+    });
+    spyOn(jsPlumb, "bind").and.callFake(function(one, two) {
+      // do nothing, we're not testing jsPlumb right now
+    });
+    spyOn(jsPlumb, "draggable").and.callFake(function(one) {
+      // do nothing, we're not testing jsPlumb right now
+    });
+    spyOn(jsPlumb, "setRenderMode").and.callFake(function(one) {
+      // do nothing, we're not testing jsPlumb right now
+    });
+
+    // We need to have a paper to work with for the tests
+    jQuery(document.body).prepend("<div id='paper'></div>")
+
+    // Init the window, which gets depview on it
+    initWindow();
+
+    // init depview
+    window.depview.init();
   });
 
   afterEach(function() {
@@ -89,11 +122,28 @@ describe("graph view", function() {
 
       // init depview
       window.depview.init();
+
+      this.clickEventStub=sinon.stub(this, 'contextmenu');
+      //from stackoverflow 16890618
     });
+	
+	afterEach(function(){
+		this.clickEvent.restore();
+	});
 
     it ("adds the test nodes via jquery", function() {
       expect(window.depview.paper.children("#test").size()).toExist();
     });
+
+    it("displays a context menu on right click", function(){
+      expect(document.getElementById("#test")).toExist();
+      expect($("#test").triggerHandler('contextmenu')).toExist();
+    });
+
+    if("event is fired", function(){
+    	document.getElementById("#test").triggerHandler('contextmenu');
+    	expect(document.getElementById("#test").clickEventStub).toHaveBeenCalled();
+    })
   });
 });
 
