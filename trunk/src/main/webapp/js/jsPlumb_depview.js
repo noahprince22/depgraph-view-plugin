@@ -62,13 +62,17 @@ function initWindow() {
         // iterate clusters
         jQuery.each(clusters, function(i, cluster) {
           jQuery.each(cluster.nodes, function(i,node) {
-            var nodeString = '<div class="' + node.color + '">'
+            var nodeString = '<div>'
+            var displayInfo = "test";
             if (window.depview.editEnabled) {
               nodeString = nodeString + '<div class="ep"/>';
             }
             nodeString = nodeString + '<a href="' + node.url + '">' + node.name + '</a></div>'
             jQuery(nodeString).
               addClass('window').
+              addClass(node.status).
+              addClass('hasTooltip').
+              attr('title', displayInfo).
               attr('id', escapeId(node.name)).
               attr('data-jobname', node.fullName).
               css('top', node.y + top).
@@ -181,4 +185,6 @@ jsPlumb.bind("ready", function() {
 
   jsPlumb.setRenderMode(jsPlumb.SVG);
   depview.init();
+  jQuery(window).load();
+  jQuery('.hasTooltip').tooltip();
 });

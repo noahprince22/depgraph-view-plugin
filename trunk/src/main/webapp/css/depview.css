@@ -96,6 +96,10 @@
   background: red;
 }
 
-.gray {
+.notbuilt {
   background: gray;
+}
+
+.infobox {
+	display: none;
 }

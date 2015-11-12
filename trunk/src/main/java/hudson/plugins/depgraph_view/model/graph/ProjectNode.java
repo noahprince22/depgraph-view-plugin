@@ -45,6 +45,10 @@ public class ProjectNode {
     }
 
     public String getColor() {
+      return project.getIconColor().getHtmlBaseColor();
+    }
+
+    public String getStatus(){
       return project.getIconColor().toString();
     }
 

@@ -24,6 +24,7 @@
 	xmlns:i="jelly:fmt">
   <j:new var="h2" className="hudson.Functions" /><!-- instead of JSP functions -->
   <link rel="stylesheet" href="${h2.inferHudsonURL(context.currentRequest)}/plugin/depgraph-view/css/depview.css"></link>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
 	<l:layout title="${it.title}">
 		<st:include page="sidepanel.jelly" />
 		<l:main-panel>
@@ -45,7 +46,6 @@
       			<script type='text/javascript' src='${rootURL}/plugin/depgraph-view/js/jquery.jsPlumb-1.4.1-all-min.js'></script>
       			<script type="text/javascript" src="${rootURL}/plugin/depgraph-view/js/jsPlumb_depview.js"></script>
             <script type="text/javascript">window.depview.editEnabled=${it.isEditFunctionInJSViewEnabled()}</script>
-
          <!-- <style>
               #diagramContainer {
                   padding: 20px;
@@ -68,6 +68,7 @@
                 <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
                 <script src="//cdnjs.cloudflare.com/ajax/libs/jsPlumb/1.4.1/jquery.jsPlumb-1.4.1-all-min.js"></script>
 
+                <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
                 <script>
                     jsPlumb.ready(function() {
                         jsPlumb.connect({
@@ -80,7 +81,6 @@
                         jsPlumb.draggable("item_right");
                     });
                 </script> -->
-
 		</l:main-panel>
 	</l:layout>
 </j:jelly>
