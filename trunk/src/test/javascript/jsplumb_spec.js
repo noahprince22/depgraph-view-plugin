@@ -65,16 +65,13 @@ describe("graph view", function() {
     });
 
     // We need to have a paper to work with for the tests
-    jQuery(document.body).prepend("<div id='paper'></div>")
+    jQuery(document.body).prepend("<div id='paper'></div>");
 
     // Init the window, which gets depview on it
     initWindow();
 
     // init depview
     window.depview.init();
-  });
-
-  afterEach(function() {
   });
 
   it ("test returns a mocked out graph for getJSON of graph.json" , function(){
@@ -87,68 +84,28 @@ describe("graph view", function() {
     expect(success).toHaveBeenCalledWith(basicGraph);
   });
 
-  describe ("correctly creates tests divs",function() {
+  describe ("context menu", function() {
     beforeEach(function() {
-      spyOn(jsPlumb, "importDefaults").and.callFake(function(params) {
-        // do nothing, we're not testing jsPlumb right now
-      });
-      spyOn(jsPlumb, "makeSource").and.callFake(function(one, two) {
-        // do nothing, we're not testing jsPlumb right now
-      });
-      spyOn(jsPlumb, "makeTarget").and.callFake(function(one, two) {
-        // do nothing, we're not testing jsPlumb right now
-      });
-      spyOn(jsPlumb, "connect").and.callFake(function(one) {
-        // do nothing, we're not testing jsPlumb right now
-      });
-      spyOn(jsPlumb, "detach").and.callFake(function(one) {
-        // do nothing, we're not testing jsPlumb right now
-      });
-      spyOn(jsPlumb, "bind").and.callFake(function(one, two) {
-        // do nothing, we're not testing jsPlumb right now
-      });
-      spyOn(jsPlumb, "draggable").and.callFake(function(one) {
-        // do nothing, we're not testing jsPlumb right now
-      });
-      spyOn(jsPlumb, "setRenderMode").and.callFake(function(one) {
-        // do nothing, we're not testing jsPlumb right now
-      });
-
-      // We need to have a paper to work with for the tests
-      jQuery(document.body).prepend("<div id='paper'></div>")
-
-      // Init the window, which gets depview on it
-      initWindow();
-
-      // init depview
-      window.depview.init();
-
-      this.clickEventStub=sinon.stub(this, 'contextmenu');
-      //from stackoverflow 16890618
-    });
-	
-	afterEach(function(){
-		this.clickEvent.restore();
-	});
-
-    it ("adds the test nodes via jquery", function() {
-      expect(window.depview.paper.children("#test").size()).toExist();
+      //debugger;
+      //jQuery(document.getElementById("test")).trigger("contextmenu");
+     // debugger;
     });
 
     it("displays a context menu on right click", function(){
-      expect(document.getElementById("#test")).toExist();
-      expect($("#test").triggerHandler('contextmenu')).toExist();
+      
+      expect($(".context-menu-root")).toBeVisible();
     });
-
-    if("event is fired", function(){
-    	document.getElementById("#test").triggerHandler('contextmenu');
-    	expect(document.getElementById("#test").clickEventStub).toHaveBeenCalled();
-    })
   });
-});
 
-describe('Escape id function', function(){
-  it('replaces all characters except numbers and letters',function() {
-     expect(escapeId('123456')).toEqual('123456');
-   });
+  describe ("correctly creates tests divs",function() {
+    it ("adds the test nodes via jquery", function() {
+      expect(window.depview.paper.children("#test").size()).toExist();
+    });
+  });
+
+  describe('Escape id function', function(){
+    it('replaces all characters except numbers and letters',function() {
+      expect(escapeId('123456')).toEqual('123456');
+    });
+  });
 });
