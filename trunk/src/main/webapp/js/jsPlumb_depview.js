@@ -62,7 +62,7 @@ function initWindow() {
         // iterate clusters
         jQuery.each(clusters, function(i, cluster) {
           jQuery.each(cluster.nodes, function(i,node) {
-            var nodeString = '<div>'
+            var nodeString = '<div class="' + node.color + '">'
             if (window.depview.editEnabled) {
               nodeString = nodeString + '<div class="ep"/>';
             }
@@ -204,4 +204,3 @@ jsPlumb.bind("ready", function() {
   jsPlumb.setRenderMode(jsPlumb.SVG);
   depview.init();
 });
-
