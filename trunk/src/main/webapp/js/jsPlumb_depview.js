@@ -74,10 +74,7 @@ function initWindow() {
               css('top', node.y + top).
               css('left', node.x + xOverall).
               appendTo(window.depview.paper);
-             document.getElementById(escapeId(node.name)).
-                addEventListener("contextmenu", function(e){
-                console.log(escapeId(node.name));
-                jQuery.contextMenu({
+            jQuery.contextMenu({
                     selector: "#"+escapeId(node.name),
                     position: function(opt, x, y){
                         opt.$menu.css({position: "absolute", top: y, left: x});
@@ -89,10 +86,8 @@ function initWindow() {
                         two: {name: "two", callback: function(){alert("TWO");}},
                         three: {name: "three", callback: function(){alert("THREE");}}
                     }
-                });
-                e.preventDefault();
             });
-          })
+          });
 
           top = top + cluster.vSize + space
           // xOverall = xOverall + cluster.hSize + space

@@ -86,13 +86,10 @@ describe("graph view", function() {
 
   describe ("context menu", function() {
     beforeEach(function() {
-      //debugger;
-      //jQuery(document.getElementById("test")).trigger("contextmenu");
-     // debugger;
+      jQuery(document.getElementById("test")).contextMenu();
     });
 
     it("displays a context menu on right click", function(){
-      
       expect($(".context-menu-root")).toBeVisible();
     });
   });
