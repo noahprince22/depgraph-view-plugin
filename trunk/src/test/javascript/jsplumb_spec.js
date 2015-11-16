@@ -95,6 +95,12 @@ describe("graph view", function() {
       expect(window.depview.paper.children("#test").size()).toExist();
     });
   });
+
+  describe ("tooltip on node hover", function() {
+    it ("displays a tooltip when a node is hovered over", function() {
+      
+    });
+  });
 });
 
 describe('Escape id function', function(){

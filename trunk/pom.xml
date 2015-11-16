@@ -177,6 +177,7 @@
               <preloadSources>
                 <source> vendor/jquery.js </source> 
                 <source> vendor/jasmine-jquery.js </source> 
+                <source> vendor/jquery.powertip.min.js </source> 
                 <source>jquery.jsPlumb-1.4.1-all-min.js</source>
                 <source> jsPlumb_depview.js </source>
               </preloadSources>
