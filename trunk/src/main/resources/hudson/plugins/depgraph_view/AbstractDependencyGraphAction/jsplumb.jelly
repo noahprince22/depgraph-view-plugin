@@ -24,6 +24,7 @@
 	xmlns:i="jelly:fmt">
   <j:new var="h2" className="hudson.Functions" /><!-- instead of JSP functions -->
   <link rel="stylesheet" href="${h2.inferHudsonURL(context.currentRequest)}/plugin/depgraph-view/css/depview.css"></link>
+  <link rel="stylesheet" href="${h2.inferHudsonURL(context.currentRequest)}/plugin/depgraph-view/css/jquery.powertip.min.css"></link>
 	<l:layout title="${it.title}">
 		<st:include page="sidepanel.jelly" />
 		<l:main-panel>
@@ -43,6 +44,7 @@
             <div id="paper"></div> <!-- style="position:relative;margin-top:100px;" -->
 
       			<script type='text/javascript' src='${rootURL}/plugin/depgraph-view/js/jquery.jsPlumb-1.4.1-all-min.js'></script>
+      			<script type='text/javascript' src='${rootURL}/plugin/depgraph-view/js/vendor/jquery.powertip.min.js'></script>
       			<script type="text/javascript" src="${rootURL}/plugin/depgraph-view/js/jsPlumb_depview.js"></script>
             <script type="text/javascript">window.depview.editEnabled=${it.isEditFunctionInJSViewEnabled()}</script>
 
@@ -66,7 +68,6 @@
 
                 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
                 <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-                <script src="//cdnjs.cloudflare.com/ajax/libs/jsPlumb/1.4.1/jquery.jsPlumb-1.4.1-all-min.js"></script>
 
                 <script>
                     jsPlumb.ready(function() {
