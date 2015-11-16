@@ -16,11 +16,13 @@ describe("graph view", function() {
           {"name": "test2",
            "fullName": "test2",
            "url": "http://localhost:8080/jenkins/job/test2/",
+           "metadata": "Some stuff",
            "x": 0,
            "y": 0},
           {"name": "test",
            "fullName": "test",
            "url": "http://localhost:8080/jenkins/job/test/",
+           "metadata": "Some stuff",
            "x": 0,
            "y": 100}
         ],
@@ -97,8 +99,13 @@ describe("graph view", function() {
   });
 
   describe ("tooltip on node hover", function() {
-    it ("displays a tooltip when a node is hovered over", function() {
-      
+    it ("has the correct metadata as title", function() {
+      expect(window.depview.paper.children("#test").attr("title")).toEqual("Some stuff");
+    });
+    
+    it ("displays the powertip on hover", function() {
+      $(window.depview.paper.children("#test")).mouseover();
+      expect($("#powerTip")).toBeVisible();
     });
   });
 });
