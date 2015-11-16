@@ -95,6 +95,14 @@ describe("graph view", function() {
       expect(window.depview.paper.children("#test").size()).toExist();
     });
   });
+
+  describe ("tooltip on node hover", function() {
+    it ("displays the powertip on hover with the correct data", function() {
+      // There is currently no good way to test what happens when you 'hover'
+      //   mouseover does not seem to work for this
+      expect(window.depview.paper.children("#test").data().powertip).toEqual("Some stuff");
+    });
+  });
 });
 
 describe('Escape id function', function(){

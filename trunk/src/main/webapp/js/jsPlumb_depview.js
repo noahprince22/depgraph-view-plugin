@@ -62,7 +62,8 @@ function initWindow() {
         // iterate clusters
         jQuery.each(clusters, function(i, cluster) {
           jQuery.each(cluster.nodes, function(i,node) {
-            var nodeString = '<div class="' + node.color + '">'
+            var nodeString = '<div>'
+            var displayInfo = "test";
             if (window.depview.editEnabled) {
               nodeString = nodeString + '<div class="ep"/>';
             }
@@ -73,7 +74,9 @@ function initWindow() {
               attr('data-jobname', node.fullName).
               css('top', node.y + top).
               css('left', node.x + xOverall).
-              appendTo(window.depview.paper);
+              appendTo(window.depview.paper).
+              powerTip({followMouse: true}).
+              data('powertip', 'Some stuff');
           })
           top = top + cluster.vSize + space
           // xOverall = xOverall + cluster.hSize + space
