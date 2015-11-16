@@ -46,9 +46,6 @@ describe("graph view", function() {
     });
   });
 
-  afterEach(function() {
-  });
-
   it ("test returns a mocked out graph for getJSON of graph.json" , function(){
     success = jasmine.createSpy('success');
     
@@ -112,7 +109,7 @@ describe("graph view", function() {
   });
 
   it("displays the color of the node", function() {
-    expect(testElement).toHaveCss({background: "blue"});
+    expect(testElement.attr("style")).toContain("background: blue");
   });
 });
 

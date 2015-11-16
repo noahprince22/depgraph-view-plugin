@@ -74,9 +74,10 @@ function initWindow() {
               attr('data-jobname', node.fullName).
               css('top', node.y + top).
               css('left', node.x + xOverall).
-              appendTo(window.depview.paper).
+              css('background', node.color).
               powerTip({followMouse: true}).
-              data('powertip', node.metadata);
+              data('powertip', node.metadata).
+              appendTo(window.depview.paper);
           })
           top = top + cluster.vSize + space
           // xOverall = xOverall + cluster.hSize + space
