@@ -76,7 +76,7 @@ function initWindow() {
               css('left', node.x + xOverall).
               appendTo(window.depview.paper).
               powerTip({followMouse: true}).
-              data('powertip', 'Some stuff');
+              data('powertip', node.metadata);
           })
           top = top + cluster.vSize + space
           // xOverall = xOverall + cluster.hSize + space
