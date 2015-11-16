@@ -1,5 +1,6 @@
 describe("graph view", function() {
   var success;
+  var testElement;
   var basicGraph = {
     "status": 200,
     "edges":[
@@ -93,10 +94,12 @@ describe("graph view", function() {
 
       // init depview
       window.depview.init();
+
+      testElement = window.depview.paper.children("#test");
     });
 
     it ("adds the test nodes via jquery", function() {
-      expect(window.depview.paper.children("#test").size()).toExist();
+      expect(testElement.size()).toExist();
     });
   });
 
@@ -104,8 +107,12 @@ describe("graph view", function() {
     it ("displays the powertip on hover with the correct data", function() {
       // There is currently no good way to test what happens when you 'hover'
       //   mouseover does not seem to work for this
-      expect(window.depview.paper.children("#test").data().powertip).toEqual("Some stuff");
+      expect(testElement.data().powertip).toEqual("Some stuff");
     });
+  });
+
+  it("displays the color of the node", function() {
+    expect(testElement).toHaveCss({background: "blue"});
   });
 });
 
