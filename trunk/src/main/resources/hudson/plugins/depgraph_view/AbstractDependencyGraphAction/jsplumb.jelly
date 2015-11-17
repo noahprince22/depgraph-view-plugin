@@ -41,6 +41,13 @@
         <a href="graph.json">${%Json format}</a>
       </p>
 
+        <script type='text/javascript' src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script type='text/javascript' src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+        <button id="ZoomIn">Zoom In</button>
+        <button id="ZoomOut">Zoom Out</button>  
+        <button id="ZoomReset">Zoom Reset</button>  
+        <script type='text/javascript' src='${rootURL}/plugin/depgraph-view/js/zoom.js'></script>
+
             <div id="paper"></div> <!-- style="position:relative;margin-top:100px;" -->
 
       			<script type='text/javascript' src='${rootURL}/plugin/depgraph-view/js/jquery.jsPlumb-1.4.1-all-min.js'></script>
