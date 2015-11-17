@@ -7,17 +7,21 @@ package hudson.plugins.depgraph_view.model.graph;
 import static org.junit.Assert.*;
 
 import hudson.model.AbstractProject;
+import hudson.model.FreeStyleProject;
 import org.apache.tools.ant.Project;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.jvnet.hudson.test.JenkinsRule;
+
+import java.io.IOException;
 
 public class ProjectNodeTest {
-//    private AbstractProject<?, ?> project;
+    private FreeStyleProject project;
     private ProjectNode node;
-/*
-    @Before
-    node = new ProjectNode(project);
-*/
+
+    @Rule
+    public JenkinsRule j = new JenkinsRule();
 
     @Test
     public void testTest() {
@@ -25,7 +29,13 @@ public class ProjectNodeTest {
     }
 
     @Test
-    public void getColorTest() {
-//        String nodeC
+    public void getColorUnbuiltTest() throws IOException {
+        createProjectAndNode();
+        assertEquals("notbuilt", node.getColor());
+    }
+
+    public void createProjectAndNode() throws IOException {
+        project = j.createFreeStyleProject();
+        node = new ProjectNode(project);
     }
 }

@@ -109,7 +109,7 @@ describe("graph view", function() {
   });
 
   it("displays the color of the node", function() {
-    expect(testElement.attr("style")).toContain("background: blue");
+    expect(testElement.attr("style")).toContain("blue");
   });
 });
 

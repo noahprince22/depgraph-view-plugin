@@ -48,6 +48,14 @@
       			<script type="text/javascript" src="${rootURL}/plugin/depgraph-view/js/jsPlumb_depview.js"></script>
             <script type="text/javascript">window.depview.editEnabled=${it.isEditFunctionInJSViewEnabled()}</script>
 
+ 			<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+			<script>
+				$(function(){
+					$(".ep").draggable();					
+					$("window.depview").draggable();
+				});
+			</script>
+
          <!-- <style>
               #diagramContainer {
                   padding: 20px;
@@ -63,11 +71,8 @@
           </style>
                 <div id="diagramContainer">
                     <div id="item_left" class="item"></div>
-                    <div id="item_right" class="item" style="margin-left:50px;"></div>
+                    <div id="item_right" class="item" style="margin-left:50px;"></div> 
                 </div>
-
-                <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-                <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
 
                 <script>
                     jsPlumb.ready(function() {
