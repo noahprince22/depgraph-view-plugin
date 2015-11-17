@@ -40,7 +40,7 @@
         <a href="graph.json">${%Json format}</a>
       </p>
 
-            <div id="paper"></div> <!-- style="position:relative;margin-top:100px;" -->
+            <div id="paperwrap"> <div id="paper"></div> </div>
 
       			<script type='text/javascript' src='${rootURL}/plugin/depgraph-view/js/jquery.jsPlumb-1.4.1-all-min.js'></script>
       			<script type="text/javascript" src="${rootURL}/plugin/depgraph-view/js/jsPlumb_depview.js"></script>
@@ -51,44 +51,9 @@
 			<script>
 				$(function(){
 					$(".ep").draggable();					
-					$("window.depview").draggable();
+					$("#paperwrap").draggable();
 				});
 			</script>
-
-         <!-- <style>
-              #diagramContainer {
-                  padding: 20px;
-                  width:80%; height: 200px;
-                  border: 1px solid gray;
-              }
-
-              .item {
-                  height:80px; width: 80px;
-                  border: 1px solid blue;
-                  float: left;
-              }
-          </style>
-                <div id="diagramContainer">
-                    <div id="item_left" class="item"></div>
-                    <div id="item_right" class="item" style="margin-left:50px;"></div> 
-                </div>
-
-                <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-                <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
-                <script src="//cdnjs.cloudflare.com/ajax/libs/jsPlumb/1.4.1/jquery.jsPlumb-1.4.1-all-min.js"></script>
-
-                <script>
-                    jsPlumb.ready(function() {
-                        jsPlumb.connect({
-                            source:"item_left",
-                            target:"item_right",
-                            endpoint:"Rectangle"
-                        });
-
-                        jsPlumb.draggable("item_left");
-                        jsPlumb.draggable("item_right");
-                    });
-                </script> -->
 
 		</l:main-panel>
 	</l:layout>

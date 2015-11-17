@@ -88,6 +88,7 @@ function initWindow() {
 	          });
           }
         })
+        
         jsPlumb.makeTarget(jsPlumb.getSelector('.window'), {
           anchor : "Continuous"
         });
