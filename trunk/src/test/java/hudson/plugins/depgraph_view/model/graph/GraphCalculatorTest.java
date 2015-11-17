@@ -23,10 +23,17 @@
 package hudson.plugins.depgraph_view.model.graph;
 
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Lists;
+import com.google.inject.Injector;
 import hudson.model.AbstractProject;
 import hudson.model.FreeStyleProject;
+import hudson.plugins.depgraph_view.model.display.AbstractGraphStringGenerator;
+import hudson.plugins.depgraph_view.model.display.DotGeneratorFactory;
+import hudson.plugins.depgraph_view.model.display.GeneratorFactory;
+import hudson.plugins.depgraph_view.model.display.JsonGeneratorFactory;
 import hudson.tasks.BuildTrigger;
+import jenkins.model.Jenkins;
 import org.junit.Rule;
 import org.junit.Test;
 import org.jvnet.hudson.test.JenkinsRule;
@@ -37,7 +44,16 @@ import java.util.Collection;
 import java.util.Collections;
 
 import static hudson.plugins.depgraph_view.model.graph.ProjectNode.node;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Iterator;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class GraphCalculatorTest {
     private FreeStyleProject project1;
@@ -73,6 +89,27 @@ public class GraphCalculatorTest {
         DependencyGraph graph = generateGraph(project2);
         assertGraphContainsProjects(graph, project1, project2);
         assertTrue(graph.findEdgeSet(node(project1), node(project2)).size() == 1);
+    }
+
+    @Test
+    public void testGenerateJson() throws FileNotFoundException, ParseException, IOException {
+        createProjects();
+        addDependency(project1, project2);
+        j.getInstance().rebuildDependencyGraph();
+        DependencyGraph graph = generateGraph(project2);
+
+        AbstractGraphStringGenerator stringGenerator = null;
+        GeneratorFactory generatorFactory = new JsonGeneratorFactory();
+
+        Injector injector = Jenkins.lookup(Injector.class);
+        GraphCalculator graphCalculator = injector.getInstance(GraphCalculator.class);
+        ListMultimap<ProjectNode, ProjectNode> projects2Subprojects =
+                injector.getInstance(SubprojectCalculator.class).generate(graph);
+
+        stringGenerator = generatorFactory.newGenerator(graph, projects2Subprojects);
+
+        String result = stringGenerator.generate();
+        assertTrue(result.contains("\"color\": \"#ABABAB\""));
     }
 
     private void assertHasOneDependencyEdge(DependencyGraph graph, AbstractProject<?,?> from, AbstractProject<?,?> to) {
