@@ -59,6 +59,7 @@
             <script type="text/javascript" src="${rootURL}/plugin/depgraph-view/js/vendor/jquery.contextMenu.js"></script>
             <script type="text/javascript" src="${rootURL}/plugin/depgraph-view/js/vendor/jquery.ui.position.js"></script>
             <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+
             <script type="text/javascript">window.depview.editEnabled=${it.isEditFunctionInJSViewEnabled()}</script>
 
  			<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>

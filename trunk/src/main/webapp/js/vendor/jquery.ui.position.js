@@ -1,13 +1,21 @@
 /*!
+<<<<<<< HEAD
  * jQuery UI Position 1.11.4
  * http://jqueryui.com
  *
  * Copyright jQuery Foundation and other contributors
+=======
+ * jQuery UI Position v1.10.0
+ * http://jqueryui.com
+ *
+ * Copyright 2013 jQuery Foundation and other contributors
+>>>>>>> 94633b6569e1ba2121b8c65787cd9936ca5ea8fc
  * Released under the MIT license.
  * http://jquery.org/license
  *
  * http://api.jqueryui.com/position/
  */
+<<<<<<< HEAD
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
 
@@ -24,20 +32,36 @@
 $.ui = $.ui || {};
 
 var cachedScrollbarWidth, supportsOffsetFractions,
+=======
+(function( $, undefined ) {
+
+$.ui = $.ui || {};
+
+var cachedScrollbarWidth,
+>>>>>>> 94633b6569e1ba2121b8c65787cd9936ca5ea8fc
 	max = Math.max,
 	abs = Math.abs,
 	round = Math.round,
 	rhorizontal = /left|center|right/,
 	rvertical = /top|center|bottom/,
+<<<<<<< HEAD
 	roffset = /[\+\-]\d+(\.[\d]+)?%?/,
+=======
+	roffset = /[\+\-]\d+%?/,
+>>>>>>> 94633b6569e1ba2121b8c65787cd9936ca5ea8fc
 	rposition = /^\w+/,
 	rpercent = /%$/,
 	_position = $.fn.position;
 
 function getOffsets( offsets, width, height ) {
 	return [
+<<<<<<< HEAD
 		parseFloat( offsets[ 0 ] ) * ( rpercent.test( offsets[ 0 ] ) ? width / 100 : 1 ),
 		parseFloat( offsets[ 1 ] ) * ( rpercent.test( offsets[ 1 ] ) ? height / 100 : 1 )
+=======
+		parseInt( offsets[ 0 ], 10 ) * ( rpercent.test( offsets[ 0 ] ) ? width / 100 : 1 ),
+		parseInt( offsets[ 1 ], 10 ) * ( rpercent.test( offsets[ 1 ] ) ? height / 100 : 1 )
+>>>>>>> 94633b6569e1ba2121b8c65787cd9936ca5ea8fc
 	];
 }
 
@@ -81,7 +105,11 @@ $.position = {
 			return cachedScrollbarWidth;
 		}
 		var w1, w2,
+<<<<<<< HEAD
 			div = $( "<div style='display:block;position:absolute;width:50px;height:50px;overflow:hidden;'><div style='height:100px;width:auto;'></div></div>" ),
+=======
+			div = $( "<div style='display:block;width:50px;height:50px;overflow:hidden;'><div style='height:100px;width:auto;'></div></div>" ),
+>>>>>>> 94633b6569e1ba2121b8c65787cd9936ca5ea8fc
 			innerDiv = div.children()[0];
 
 		$( "body" ).append( div );
@@ -99,21 +127,32 @@ $.position = {
 		return (cachedScrollbarWidth = w1 - w2);
 	},
 	getScrollInfo: function( within ) {
+<<<<<<< HEAD
 		var overflowX = within.isWindow || within.isDocument ? "" :
 				within.element.css( "overflow-x" ),
 			overflowY = within.isWindow || within.isDocument ? "" :
 				within.element.css( "overflow-y" ),
+=======
+		var overflowX = within.isWindow ? "" : within.element.css( "overflow-x" ),
+			overflowY = within.isWindow ? "" : within.element.css( "overflow-y" ),
+>>>>>>> 94633b6569e1ba2121b8c65787cd9936ca5ea8fc
 			hasOverflowX = overflowX === "scroll" ||
 				( overflowX === "auto" && within.width < within.element[0].scrollWidth ),
 			hasOverflowY = overflowY === "scroll" ||
 				( overflowY === "auto" && within.height < within.element[0].scrollHeight );
 		return {
+<<<<<<< HEAD
 			width: hasOverflowY ? $.position.scrollbarWidth() : 0,
 			height: hasOverflowX ? $.position.scrollbarWidth() : 0
+=======
+			width: hasOverflowX ? $.position.scrollbarWidth() : 0,
+			height: hasOverflowY ? $.position.scrollbarWidth() : 0
+>>>>>>> 94633b6569e1ba2121b8c65787cd9936ca5ea8fc
 		};
 	},
 	getWithinInfo: function( element ) {
 		var withinElement = $( element || window ),
+<<<<<<< HEAD
 			isWindow = $.isWindow( withinElement[0] ),
 			isDocument = !!withinElement[ 0 ] && withinElement[ 0 ].nodeType === 9;
 		return {
@@ -128,6 +167,17 @@ $.position = {
 			// jQuery 1.6 doesn't support .outerWidth/Height() on documents or windows
 			width: isWindow || isDocument ? withinElement.width() : withinElement.outerWidth(),
 			height: isWindow || isDocument ? withinElement.height() : withinElement.outerHeight()
+=======
+			isWindow = $.isWindow( withinElement[0] );
+		return {
+			element: withinElement,
+			isWindow: isWindow,
+			offset: withinElement.offset() || { left: 0, top: 0 },
+			scrollLeft: withinElement.scrollLeft(),
+			scrollTop: withinElement.scrollTop(),
+			width: isWindow ? withinElement.width() : withinElement.outerWidth(),
+			height: isWindow ? withinElement.height() : withinElement.outerHeight()
+>>>>>>> 94633b6569e1ba2121b8c65787cd9936ca5ea8fc
 		};
 	}
 };
@@ -239,7 +289,11 @@ $.fn.position = function( options ) {
 		position.top += myOffset[ 1 ];
 
 		// if the browser doesn't support fractions, then round for consistent results
+<<<<<<< HEAD
 		if ( !supportsOffsetFractions ) {
+=======
+		if ( !$.support.offsetFractions ) {
+>>>>>>> 94633b6569e1ba2121b8c65787cd9936ca5ea8fc
 			position.left = round( position.left );
 			position.top = round( position.top );
 		}
@@ -263,7 +317,11 @@ $.fn.position = function( options ) {
 					my: options.my,
 					at: options.at,
 					within: within,
+<<<<<<< HEAD
 					elem: elem
+=======
+					elem : elem
+>>>>>>> 94633b6569e1ba2121b8c65787cd9936ca5ea8fc
 				});
 			}
 		});
@@ -417,7 +475,12 @@ $.ui.position = {
 				if ( newOverRight < 0 || newOverRight < abs( overLeft ) ) {
 					position.left += myOffset + atOffset + offset;
 				}
+<<<<<<< HEAD
 			} else if ( overRight > 0 ) {
+=======
+			}
+			else if ( overRight > 0 ) {
+>>>>>>> 94633b6569e1ba2121b8c65787cd9936ca5ea8fc
 				newOverLeft = position.left - data.collisionPosition.marginLeft + myOffset + atOffset + offset - offsetLeft;
 				if ( newOverLeft > 0 || abs( newOverLeft ) < overRight ) {
 					position.left += myOffset + atOffset + offset;
@@ -448,12 +511,22 @@ $.ui.position = {
 				newOverBottom;
 			if ( overTop < 0 ) {
 				newOverBottom = position.top + myOffset + atOffset + offset + data.collisionHeight - outerHeight - withinOffset;
+<<<<<<< HEAD
 				if ( newOverBottom < 0 || newOverBottom < abs( overTop ) ) {
 					position.top += myOffset + atOffset + offset;
 				}
 			} else if ( overBottom > 0 ) {
 				newOverTop = position.top - data.collisionPosition.marginTop + myOffset + atOffset + offset - offsetTop;
 				if ( newOverTop > 0 || abs( newOverTop ) < overBottom ) {
+=======
+				if ( ( position.top + myOffset + atOffset + offset) > overTop && ( newOverBottom < 0 || newOverBottom < abs( overTop ) ) ) {
+					position.top += myOffset + atOffset + offset;
+				}
+			}
+			else if ( overBottom > 0 ) {
+				newOverTop = position.top -  data.collisionPosition.marginTop + myOffset + atOffset + offset - offsetTop;
+				if ( ( position.top + myOffset + atOffset + offset) > overBottom && ( newOverTop > 0 || abs( newOverTop ) < overBottom ) ) {
+>>>>>>> 94633b6569e1ba2121b8c65787cd9936ca5ea8fc
 					position.top += myOffset + atOffset + offset;
 				}
 			}
@@ -472,7 +545,11 @@ $.ui.position = {
 };
 
 // fraction support test
+<<<<<<< HEAD
 (function() {
+=======
+(function () {
+>>>>>>> 94633b6569e1ba2121b8c65787cd9936ca5ea8fc
 	var testElement, testElementParent, testElementStyle, offsetLeft, i,
 		body = document.getElementsByTagName( "body" )[ 0 ],
 		div = document.createElement( "div" );
@@ -504,14 +581,22 @@ $.ui.position = {
 	div.style.cssText = "position: absolute; left: 10.7432222px;";
 
 	offsetLeft = $( div ).offset().left;
+<<<<<<< HEAD
 	supportsOffsetFractions = offsetLeft > 10 && offsetLeft < 11;
+=======
+	$.support.offsetFractions = offsetLeft > 10 && offsetLeft < 11;
+>>>>>>> 94633b6569e1ba2121b8c65787cd9936ca5ea8fc
 
 	testElement.innerHTML = "";
 	testElementParent.removeChild( testElement );
 })();
 
+<<<<<<< HEAD
 })();
 
 return $.ui.position;
 
 }));
+=======
+}( jQuery ) );
+>>>>>>> 94633b6569e1ba2121b8c65787cd9936ca5ea8fc
