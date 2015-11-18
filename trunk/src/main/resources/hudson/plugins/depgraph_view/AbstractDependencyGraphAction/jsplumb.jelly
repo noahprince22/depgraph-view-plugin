@@ -25,6 +25,8 @@
   <j:new var="h2" className="hudson.Functions" /><!-- instead of JSP functions -->
   <link rel="stylesheet" href="${h2.inferHudsonURL(context.currentRequest)}/plugin/depgraph-view/css/depview.css"></link>
   <link rel="stylesheet" href="${h2.inferHudsonURL(context.currentRequest)}/plugin/depgraph-view/css/jquery.powertip.min.css"></link>
+  <link rel="stylesheet" href="https://raw.githubusercontent.com/swisnl/jQuery-contextMenu/master/dist/jquery.contextMenu.css"></link>
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.css"></link>
 	<l:layout title="${it.title}">
 		<st:include page="sidepanel.jelly" />
 		<l:main-panel>
@@ -53,6 +55,10 @@
       			<script type='text/javascript' src='${rootURL}/plugin/depgraph-view/js/jquery.jsPlumb-1.4.1-all-min.js'></script>
       			<script type='text/javascript' src='${rootURL}/plugin/depgraph-view/js/vendor/jquery.powertip.min.js'></script>
       			<script type="text/javascript" src="${rootURL}/plugin/depgraph-view/js/jsPlumb_depview.js"></script>
+
+            <script type="text/javascript" src="${rootURL}/plugin/depgraph-view/js/vendor/jquery.contextMenu.js"></script>
+            <script type="text/javascript" src="${rootURL}/plugin/depgraph-view/js/vendor/jquery.ui.position.js"></script>
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
             <script type="text/javascript">window.depview.editEnabled=${it.isEditFunctionInJSViewEnabled()}</script>
 
  			<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>

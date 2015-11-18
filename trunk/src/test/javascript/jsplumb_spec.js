@@ -99,6 +99,29 @@ describe("graph view", function() {
       expect(testElement.size()).toExist();
     });
   });
+  describe ("context menu", function() {
+    beforeEach(function() {
+      jQuery(document.getElementById("test")).contextMenu();
+    });
+
+
+    it("displays a context menu on right click", function(){
+      expect($(".context-menu-root")).toBeVisible();
+    });
+
+
+    it("builds on clicking build", function(){
+      //debugger;
+      expect($(".context-menu-root")).toBeVisible();
+      //debugger;
+      $('.context-menu-visible').eq(0).trigger('mouseup');
+      //$('.context-menu-visible').eq(3).click();
+      debugger;
+      //expect($(".context-menu-root")).not.toBeVisible();
+      //expect(building).toEqual("built");
+    })
+  });
+
 
   describe ("tooltip on node hover", function() {
     it ("displays the powertip on hover with the correct data", function() {

@@ -78,6 +78,28 @@ function initWindow() {
               powerTip({followMouse: true}).
               data('powertip', node.metadata).
               appendTo(window.depview.paper);
+            jQuery.contextMenu({
+              selector: "#"+escapeId(node.name),
+              position: function(opt, x, y){
+                  opt.$menu.css({position: "absolute", top: y, left: x});
+              },
+              items:{
+                  buildopt: {name: "Build", callback: function(){
+                    var url = node.url+"build?delay=0sec";
+                    var method = "POST";
+                    var async = true;
+                    var request = new XMLHttpRequest();
+                    request.onload = function(){
+                        console.log("Building");
+                    }
+                    request.open(method, url, async);
+                    request.send();
+                    return "built";
+                  }},
+                  zoom: {name: "Zoom Out", callback: function() {$("#paper").animate({ 'zoom': 1 }, 'slow');}},
+                  center: {name: "Center", callback: function(){alert("Center");}}
+              }
+            });
           })
           top = top + cluster.vSize + space
           // xOverall = xOverall + cluster.hSize + space
