@@ -177,7 +177,7 @@ public class JsonStringGenerator extends AbstractGraphStringGenerator {
                 .put("x", x)
                 .put("y", y)
                 .put("color", node.getColor())
-                .put("meetadata", node.getMetadata())
+                .put("metadata", node.getMetadata())
                 .build();
     }
 
