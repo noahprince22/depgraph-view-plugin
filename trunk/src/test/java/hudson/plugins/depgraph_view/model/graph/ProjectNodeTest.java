@@ -14,21 +14,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.jvnet.hudson.test.JenkinsRule;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
-import hudson.model.AbstractProject;
-import hudson.model.FreeStyleProject;
-import hudson.tasks.BuildTrigger;
-import org.junit.Rule;
-import org.junit.Test;
-import org.jvnet.hudson.test.JenkinsRule;
-
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-
-import static hudson.plugins.depgraph_view.model.graph.ProjectNode.node;
 
 public class ProjectNodeTest {
     private FreeStyleProject project;
