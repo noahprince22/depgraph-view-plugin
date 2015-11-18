@@ -53,6 +53,29 @@ function initWindow() {
                              ]
 
       });
+    var nodeList = [];
+    jQuery.fn.center = function () {
+    //Calculate the clicked node distance from the chosen center point
+    var paperLeft = $('#paper').position().left;
+    var paperTop = $('#paper').position().top;
+    var centerLeft = ($('#paper').width()*.001)+paperLeft
+    var centerTop =($('#paper').height()*.001)+paperTop
+    var xDiff = centerLeft- $(this).position().left;
+    var yDiff = centerTop-$(this).position().top;
+    //loop through and change all nodes position relative to centerpoint
+    var arrayLength = nodeList.length;
+    for (var i = 0; i < arrayLength; i++) {
+      $("#"+nodeList[i]).css("position","absolute");
+      positionCurr = $("#"+nodeList[i]).position();
+      leftCurr  = positionCurr.left;
+      topCurr = positionCurr.top;
+      newLeft = leftCurr + xDiff;
+      newTop = topCurr + yDiff;
+      $("#"+nodeList[i]).css("left", newLeft+"px");
+      $("#"+nodeList[i]).css("top", newTop+"px");
+    }
+
+}
       jQuery.getJSON('graph.json', function(data) {
         var top = 3;
         var space = 150;
@@ -62,6 +85,7 @@ function initWindow() {
         // iterate clusters
         jQuery.each(clusters, function(i, cluster) {
           jQuery.each(cluster.nodes, function(i,node) {
+            nodeList.push(escapeId(node.name));
             var nodeString = '<div>'
             var displayInfo = "test";
             if (window.depview.editEnabled) {
@@ -84,7 +108,7 @@ function initWindow() {
                   opt.$menu.css({position: "absolute", top: y, left: x});
               },
               items:{
-                  buildopt: {name: "Build", callback: function(){
+                  buildopt: {name: "Build", callback: function buildfun(){
                     var url = node.url+"build?delay=0sec";
                     var method = "POST";
                     var async = true;
@@ -97,7 +121,7 @@ function initWindow() {
                     return "built";
                   }},
                   zoom: {name: "Zoom Out", callback: function() {$("#paper").animate({ 'zoom': 1 }, 'slow');}},
-                  center: {name: "Center", callback: function(){alert("Center");}}
+                  jim: {name: "Center View", callback: function(){$("#"+escapeId(node.name)).center();}}
               }
             });
           })
