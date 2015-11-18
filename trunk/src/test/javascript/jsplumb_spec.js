@@ -1,5 +1,6 @@
 describe("graph view", function() {
   var success;
+  var testElement;
   var basicGraph = {
     "status": 200,
     "edges":[
@@ -16,11 +17,15 @@ describe("graph view", function() {
           {"name": "test2",
            "fullName": "test2",
            "url": "http://localhost:8080/jenkins/job/test2/",
+           "metadata": "Some stuff",
+           "color": "blue",
            "x": 0,
            "y": 0},
           {"name": "test",
            "fullName": "test",
            "url": "http://localhost:8080/jenkins/job/test/",
+           "metadata": "Some stuff",
+           "color": "blue",
            "x": 0,
            "y": 100}
         ],
@@ -39,9 +44,6 @@ describe("graph view", function() {
         succ(basicGraph);
       }
     });
-  });
-
-  afterEach(function() {
   });
 
   it ("test returns a mocked out graph for getJSON of graph.json" , function(){
@@ -89,11 +91,25 @@ describe("graph view", function() {
 
       // init depview
       window.depview.init();
+
+      testElement = window.depview.paper.children("#test");
     });
 
     it ("adds the test nodes via jquery", function() {
-      expect(window.depview.paper.children("#test").size()).toExist();
+      expect(testElement.size()).toExist();
     });
+  });
+
+  describe ("tooltip on node hover", function() {
+    it ("displays the powertip on hover with the correct data", function() {
+      // There is currently no good way to test what happens when you 'hover'
+      //   mouseover does not seem to work for this
+      expect(testElement.data().powertip).toEqual("Some stuff");
+    });
+  });
+
+  it("displays the color of the node", function() {
+    expect(testElement.attr("style")).toContain("blue");
   });
 });
 
