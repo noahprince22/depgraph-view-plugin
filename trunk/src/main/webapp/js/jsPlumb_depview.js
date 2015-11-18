@@ -67,7 +67,7 @@ function initWindow() {
             if (window.depview.editEnabled) {
               nodeString = nodeString + '<div class="ep"/>';
             }
-            nodeString = nodeString + '<a href="' + node.url + '">' + node.name + '</a></div>'
+            nodeString = nodeString + '<a href="' + node.url + '">' + node.name + '</a></div>';
             jQuery(nodeString).
               addClass('window').
               attr('id', escapeId(node.name)).
@@ -92,7 +92,7 @@ function initWindow() {
 	          });
           }
         })
-        
+
         jsPlumb.makeTarget(jsPlumb.getSelector('.window'), {
           anchor : "Continuous"
         });
