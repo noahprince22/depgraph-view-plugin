@@ -41,7 +41,7 @@
         <a href="graph.json">${%Json format}</a>
       </p>
 
-        <div id="paperwrap"> <div id="paper"></div> </div>
+        <div id="paper"></div>
         
         <script type='text/javascript' src="http://code.jquery.com/jquery-1.10.2.js"></script>
         <script type='text/javascript' src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
@@ -53,12 +53,11 @@
 		<script type='text/javascript' src='${rootURL}/plugin/depgraph-view/js/vendor/jquery.powertip.min.js'></script>
 		<script type="text/javascript" src="${rootURL}/plugin/depgraph-view/js/jsPlumb_depview.js"></script>
         <script type="text/javascript">window.depview.editEnabled=${it.isEditFunctionInJSViewEnabled()}</script>
-
 		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 		<script>
 			$(function(){
 				$(".ep").draggable();					
-				$("#paperwrap").draggable();
+				$("#paper").draggable();
 			});
 		</script>
 		</l:main-panel>
