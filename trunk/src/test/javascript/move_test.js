@@ -1,4 +1,4 @@
-describe("Move Picture", function() {
+/*describe("Move Picture", function() {
 
     beforeEach(function() {
         this.addMatchers({
@@ -11,8 +11,9 @@ describe("Move Picture", function() {
     });
     it("can move picture", function() {
         //TODO figure out how to define a picture objects
-        expect(picture()).canBeMoved();
+        //expect(picture()).canBeMoved();
     });
+*/
 
     /*
     Some stuff we want to test:
@@ -25,5 +26,7 @@ describe("Move Picture", function() {
         Also make a div that wraps the "paper div" and the surrounding area.
         Make sure paper is drawable and something, something overlap with the bigger div
     */
+    /*
 });
 
+*/

@@ -31,7 +31,8 @@ public class ProjectNodeTest {
     @Test
     public void getColorUnbuiltTest() throws IOException {
         createProjectAndNode();
-        assertEquals("notbuilt", node.getColor());
+
+        assertEquals(node.getColor(), "notbuilt");
     }
 
     public void createProjectAndNode() throws IOException {

@@ -25,7 +25,7 @@
     <j:when test="${it.isGraphvizEnabled()}">
 	  <l:layout title="${it.title}">
 	  
-	  	<!-- Try to use side panel from parent object, if present. -->
+	  <!-- Try to use side panel from parent object, if present. -->
 		<j:choose>
 			<j:when test="${it.parentObject != null}">
 			    <st:include it="${it.parentObject}" page="sidepanel.jelly" optional="true" />
@@ -42,10 +42,16 @@
 	            <l:tab name="jsplumb" active="${false}"  href="./jsplumb" />
 	            <l:tab name="sigmajs" active="${false}"  href="./jsplumb" />
 	      </l:tabBar>
+
+
 	      <img src="graph.png" lazymap="graph.map"/>
-	      <p>
+	     
+
+        <p>
 	        <a href="graph.gv">${%Graph in graphviz format}</a>
-	      </p><p>
+	      </p>
+
+        <p>
 	        <a href="legend.png">${%Legend}</a>
 	      </p>
 	    </l:main-panel>
