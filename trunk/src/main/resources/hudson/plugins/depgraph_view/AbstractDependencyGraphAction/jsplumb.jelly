@@ -25,6 +25,8 @@
   <j:new var="h2" className="hudson.Functions" /><!-- instead of JSP functions -->
   <link rel="stylesheet" href="${h2.inferHudsonURL(context.currentRequest)}/plugin/depgraph-view/css/depview.css"></link>
   <link rel="stylesheet" href="${h2.inferHudsonURL(context.currentRequest)}/plugin/depgraph-view/css/jquery.powertip.min.css"></link>
+  <link rel="stylesheet" href="https://raw.githubusercontent.com/swisnl/jQuery-contextMenu/master/dist/jquery.contextMenu.css"></link>
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.css"></link>
 	<l:layout title="${it.title}">
 		<st:include page="sidepanel.jelly" />
 		<l:main-panel>
@@ -41,25 +43,62 @@
         <a href="graph.json">${%Json format}</a>
       </p>
 
-        <div id="paper"></div>
-        
         <script type='text/javascript' src="http://code.jquery.com/jquery-1.10.2.js"></script>
         <script type='text/javascript' src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
         <button id="ZoomIn">Zoom In</button>
         <button id="ZoomOut">Zoom Out</button>  
         <button id="ZoomReset">Zoom Reset</button>  
         <script type='text/javascript' src='${rootURL}/plugin/depgraph-view/js/zoom.js'></script>
-		<script type='text/javascript' src='${rootURL}/plugin/depgraph-view/js/jquery.jsPlumb-1.4.1-all-min.js'></script>
-		<script type='text/javascript' src='${rootURL}/plugin/depgraph-view/js/vendor/jquery.powertip.min.js'></script>
-		<script type="text/javascript" src="${rootURL}/plugin/depgraph-view/js/jsPlumb_depview.js"></script>
-        <script type="text/javascript">window.depview.editEnabled=${it.isEditFunctionInJSViewEnabled()}</script>
-		<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-		<script>
-			$(function(){
-				$(".ep").draggable();					
-				$("#paper").draggable();
-			});
-		</script>
+
+            <div id="paper"></div> <!-- style="position:relative;margin-top:100px;" -->
+
+      			<script type='text/javascript' src='${rootURL}/plugin/depgraph-view/js/jquery.jsPlumb-1.4.1-all-min.js'></script>
+      			<script type='text/javascript' src='${rootURL}/plugin/depgraph-view/js/vendor/jquery.powertip.min.js'></script>
+      			<script type="text/javascript" src="${rootURL}/plugin/depgraph-view/js/jsPlumb_depview.js"></script>
+            <script type="text/javascript" src="${rootURL}/plugin/depgraph-view/js/vendor/jquery.contextMenu.js"></script>
+            <script type="text/javascript" src="${rootURL}/plugin/depgraph-view/js/vendor/jquery.ui.position.js"></script>
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+            <script type="text/javascript">window.depview.editEnabled=${it.isEditFunctionInJSViewEnabled()}</script>
+
+ 			<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+			<script>
+				$(function(){
+					$(".ep").draggable();					
+					$("window.depview").draggable();
+				});
+			</script>
+
+         <!-- <style>
+              #diagramContainer {
+                  padding: 20px;
+                  width:80%; height: 200px;
+                  border: 1px solid gray;
+              }
+
+              .item {
+                  height:80px; width: 80px;
+                  border: 1px solid blue;
+                  float: left;
+              }
+          </style>
+                <div id="diagramContainer">
+                    <div id="item_left" class="item"></div>
+                    <div id="item_right" class="item" style="margin-left:50px;"></div> 
+                </div>
+
+                <script>
+                    jsPlumb.ready(function() {
+                        jsPlumb.connect({
+                            source:"item_left",
+                            target:"item_right",
+                            endpoint:"Rectangle"
+                        });
+
+                        jsPlumb.draggable("item_left");
+                        jsPlumb.draggable("item_right");
+                    });
+                </script> -->
+
 		</l:main-panel>
 	</l:layout>
 </j:jelly>
