@@ -40,7 +40,7 @@
       <p>
         <a href="graph.json">${%Json format}</a>
       </p>
-
+        
         <script type='text/javascript' src="http://code.jquery.com/jquery-1.10.2.js"></script>
         <script type='text/javascript' src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
         <button id="ZoomIn">Zoom In</button>
