@@ -110,12 +110,12 @@ describe("graph view", function() {
       expect($(".context-menu-root")).toBeVisible();
     });
 
-
     it("builds on clicking build", function(){
       expect($(".context-menu-root")).toBeVisible();
-      //jasmine.spyOn($, 'post');
-      // $('.context-menu-item').eq(3).trigger('mouseup');
-    })
+      spyOn(XMLHttpRequest.prototype, 'send');
+      $('.context-menu-item').eq(3).trigger('mouseup');
+      expect(XMLHttpRequest.prototype.send).toHaveBeenCalled();
+    });
 
     it("moves the node clicked to the picked center", function(){
     	//debugger;
