@@ -125,8 +125,8 @@ describe("graph view", function() {
       $("#"+clickedNodeName).center();
       //debugger;
       $("#"+clickedNodeName).center();
-      expect(parseFloat(($("#"+clickedNodeName)).position().left).toFixed(1)).
-      	toEqual(parseFloat(($('#paper').width()*.001)+paperLeft).toFixed(1));
+      expect(parseFloat(($("#"+clickedNodeName)).position().left).toFixed(0)).
+      	toEqual(parseFloat(($('#paper').width()*.001)+paperLeft).toFixed(0));
     });
 
     it("Sets zoom to 1 on zoom out menu click", function(){
