@@ -44,45 +44,6 @@ describe("graph view", function() {
         succ(basicGraph);
       }
     });
-    spyOn(jsPlumb, "importDefaults").and.callFake(function(params) {
-      // do nothing, we're not testing jsPlumb right now
-    });
-    spyOn(jsPlumb, "makeSource").and.callFake(function(one, two) {
-      // do nothing, we're not testing jsPlumb right now
-    });
-    spyOn(jsPlumb, "makeTarget").and.callFake(function(one, two) {
-      // do nothing, we're not testing jsPlumb right now
-    });
-    spyOn(jsPlumb, "connect").and.callFake(function(one) {
-      // do nothing, we're not testing jsPlumb right now
-    });
-    spyOn(jsPlumb, "detach").and.callFake(function(one) {
-      // do nothing, we're not testing jsPlumb right now
-    });
-    spyOn(jsPlumb, "bind").and.callFake(function(one, two) {
-      // do nothing, we're not testing jsPlumb right now
-    });
-    spyOn(jsPlumb, "draggable").and.callFake(function(one) {
-      // do nothing, we're not testing jsPlumb right now
-    });
-    spyOn(jsPlumb, "setRenderMode").and.callFake(function(one) {
-      // do nothing, we're not testing jsPlumb right now
-    });
-
-    // We need to have a paper to work with for the tests
-    jQuery(document.body).prepend("<div id='paper'></div>");
-
-    // Init the window, which gets depview on it
-    initWindow();
-
-    // init depview
-    window.depview.init();
-
-    testElement = window.depview.paper.children("#test");
-  });
-
-  afterEach(function() {
-    window.depview.paper.remove();
   });
 
   it ("test returns a mocked out graph for getJSON of graph.json" , function(){
@@ -96,6 +57,44 @@ describe("graph view", function() {
   });
 
   describe ("correctly creates tests divs",function() {
+    beforeEach(function() {
+      spyOn(jsPlumb, "importDefaults").and.callFake(function(params) {
+        // do nothing, we're not testing jsPlumb right now
+      });
+      spyOn(jsPlumb, "makeSource").and.callFake(function(one, two) {
+        // do nothing, we're not testing jsPlumb right now
+      });
+      spyOn(jsPlumb, "makeTarget").and.callFake(function(one, two) {
+        // do nothing, we're not testing jsPlumb right now
+      });
+      spyOn(jsPlumb, "connect").and.callFake(function(one) {
+        // do nothing, we're not testing jsPlumb right now
+      });
+      spyOn(jsPlumb, "detach").and.callFake(function(one) {
+        // do nothing, we're not testing jsPlumb right now
+      });
+      spyOn(jsPlumb, "bind").and.callFake(function(one, two) {
+        // do nothing, we're not testing jsPlumb right now
+      });
+      spyOn(jsPlumb, "draggable").and.callFake(function(one) {
+        // do nothing, we're not testing jsPlumb right now
+      });
+      spyOn(jsPlumb, "setRenderMode").and.callFake(function(one) {
+        // do nothing, we're not testing jsPlumb right now
+      });
+
+      // We need to have a paper to work with for the tests
+      jQuery(document.body).prepend("<div id='paper'></div>");
+
+      // Init the window, which gets depview on it
+      initWindow();
+
+      // init depview
+      window.depview.init();
+
+      testElement = window.depview.paper.children("#test");
+    });
+    
     it ("adds the test nodes via jquery", function() {
       expect(testElement.size()).toExist();
     });
@@ -115,7 +114,7 @@ describe("graph view", function() {
     it("builds on clicking build", function(){
       expect($(".context-menu-root")).toBeVisible();
       //jasmine.spyOn($, 'post');
-     // $('.context-menu-item').eq(3).trigger('mouseup');
+      // $('.context-menu-item').eq(3).trigger('mouseup');
     })
 
     it("moves the node clicked to the picked center", function(){
