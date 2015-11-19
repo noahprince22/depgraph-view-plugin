@@ -53,7 +53,7 @@
     </developer>
   </developers>
   <dependencies>
-    <dependency>
+      <dependency>
       <groupId>org.jenkins-ci.plugins</groupId>
       <artifactId>copyartifact</artifactId>
       <version>1.18</version>
@@ -95,6 +95,16 @@
       <artifactId>guice-multibindings</artifactId>
       <version>3.1.0</version>
     </dependency>
+      <dependency>
+          <groupId>com.googlecode.json-simple</groupId>
+          <artifactId>json-simple</artifactId>
+          <version>1.1.1</version>
+      </dependency>
+      <dependency>
+    		<groupId>log4j</groupId>
+    		<artifactId>log4j</artifactId>
+    		<version>1.2.17</version>
+    	</dependency>
   </dependencies>
   <build>
     <pluginManagement>
@@ -179,6 +189,7 @@
                 <source> vendor/jquery.contextMenu.js </source> 
                 <source> vendor/jasmine-jquery.js </source> 
                 <source> vendor/jquery.ui.position.js </source> 
+                <source> vendor/jquery.powertip.min.js </source>
                 <source>jquery.jsPlumb-1.4.1-all-min.js</source>
                 <source> jsPlumb_depview.js </source>
               </preloadSources>

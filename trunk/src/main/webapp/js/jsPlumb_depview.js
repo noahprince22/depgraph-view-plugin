@@ -62,17 +62,21 @@ function initWindow() {
         // iterate clusters
         jQuery.each(clusters, function(i, cluster) {
           jQuery.each(cluster.nodes, function(i,node) {
-            var nodeString = '<div class="' + node.color + '">'
+            var nodeString = '<div>'
+            var displayInfo = "test";
             if (window.depview.editEnabled) {
               nodeString = nodeString + '<div class="ep"/>';
             }
-            nodeString = nodeString + '<a href="' + node.url + '">' + node.name + '</a></div>'
+            nodeString = nodeString + '<a href="' + node.url + '">' + node.name + '</a></div>';
             jQuery(nodeString).
               addClass('window').
               attr('id', escapeId(node.name)).
               attr('data-jobname', node.fullName).
               css('top', node.y + top).
               css('left', node.x + xOverall).
+              css('background', node.color).
+              powerTip({followMouse: true}).
+              data('powertip', node.metadata).
               appendTo(window.depview.paper);
             jQuery.contextMenu({
                     selector: "#"+escapeId(node.name),
@@ -102,6 +106,7 @@ function initWindow() {
 	          });
           }
         })
+
         jsPlumb.makeTarget(jsPlumb.getSelector('.window'), {
           anchor : "Continuous"
         });
