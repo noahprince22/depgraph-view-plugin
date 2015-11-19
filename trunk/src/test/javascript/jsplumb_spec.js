@@ -81,6 +81,10 @@ describe("graph view", function() {
     testElement = window.depview.paper.children("#test");
   });
 
+  afterEach(function() {
+    window.depview.paper.remove();
+  });
+
   it ("test returns a mocked out graph for getJSON of graph.json" , function(){
     success = jasmine.createSpy('success');
     
@@ -91,22 +95,49 @@ describe("graph view", function() {
     expect(success).toHaveBeenCalledWith(basicGraph);
   });
 
-  describe ("context menu", function() {
-    beforeEach(function() {
-      jQuery(document.getElementById("test")).contextMenu();
-    });
-
-    it("displays a context menu on right click", function(){
-      expect($(".context-menu-root")).toBeVisible();
-    });
-  });
-
   describe ("correctly creates tests divs",function() {
     it ("adds the test nodes via jquery", function() {
       expect(testElement.size()).toExist();
     });
   });
-  
+
+  describe ("context menu", function() {
+    beforeEach(function() {
+      jQuery(document.getElementById("test")).contextMenu();
+      
+    });
+
+    it("displays a context menu on right click", function(){
+      expect($(".context-menu-root")).toBeVisible();
+    });
+
+
+    it("builds on clicking build", function(){
+      expect($(".context-menu-root")).toBeVisible();
+      //jasmine.spyOn($, 'post');
+     // $('.context-menu-item').eq(3).trigger('mouseup');
+    })
+
+    it("moves the node clicked to the picked center", function(){
+    	//debugger;
+      var clickedNodeName = basicGraph['clusters'][0]['nodes'][0]['name']
+      var paperLeft = $('#paper').position().left;
+      var centerLeft = ($('#paper').width()*.001)+paperLeft;
+      $("#"+clickedNodeName).center();
+      //debugger;
+      $("#"+clickedNodeName).center();
+      expect(parseFloat(($("#"+clickedNodeName)).position().left).toFixed(1)).
+      	toEqual(parseFloat(($('#paper').width()*.001)+paperLeft).toFixed(1));
+    });
+
+    it("Sets zoom to 1 on zoom out menu click", function(){
+      $("#paper").animate({ 'zoom': 1 }, 'slow');
+      //debugger;
+      expect($("#paper").css('zoom')).toEqual('1');
+    });
+
+  });
+
   describe ("tooltip on node hover", function() {
     it ("displays the powertip on hover with the correct data", function() {
       // There is currently no good way to test what happens when you 'hover'

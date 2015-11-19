@@ -43,6 +43,10 @@
         <a href="graph.json">${%Json format}</a>
       </p>
 
+        <button id="ZoomIn">Zoom In</button>
+        <button id="ZoomOut">Zoom Out</button>  
+        <button id="ZoomReset">Zoom Reset</button>          
+
             <div id="paper"></div> <!-- style="position:relative;margin-top:100px;" -->
 
                 <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script> 
@@ -66,12 +70,7 @@
 
 
             <script type="text/javascript">window.depview.editEnabled=${it.isEditFunctionInJSViewEnabled()}</script>
-
-        
-        <button id="ZoomIn">Zoom In</button>
-        <button id="ZoomOut">Zoom Out</button>  
-        <button id="ZoomReset">Zoom Reset</button>  
-
+            
 		</l:main-panel>
 	</l:layout>
 </j:jelly>

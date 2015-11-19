@@ -53,6 +53,29 @@ function initWindow() {
                              ]
 
       });
+    var nodeList = [];
+    jQuery.fn.center = function () {
+    //Calculate the clicked node distance from the chosen center point
+    var paperLeft = $('#paper').position().left;
+    var paperTop = $('#paper').position().top;
+    var centerLeft = ($('#paper').width()*.001)+paperLeft
+    var centerTop =($('#paper').height()*.001)+paperTop
+    var xDiff = centerLeft- $(this).position().left;
+    var yDiff = centerTop-$(this).position().top;
+    //loop through and change all nodes position relative to centerpoint
+    var arrayLength = nodeList.length;
+    for (var i = 0; i < arrayLength; i++) {
+      $("#"+nodeList[i]).css("position","absolute");
+      positionCurr = $("#"+nodeList[i]).position();
+      leftCurr  = positionCurr.left;
+      topCurr = positionCurr.top;
+      newLeft = leftCurr + xDiff;
+      newTop = topCurr + yDiff;
+      $("#"+nodeList[i]).css("left", newLeft+"px");
+      $("#"+nodeList[i]).css("top", newTop+"px");
+    }
+
+}
       jQuery.getJSON('graph.json', function(data) {
         var top = 3;
         var space = 150;
@@ -62,6 +85,7 @@ function initWindow() {
         // iterate clusters
         jQuery.each(clusters, function(i, cluster) {
           jQuery.each(cluster.nodes, function(i,node) {
+            nodeList.push(escapeId(node.name));
             var nodeString = '<div>'
             var displayInfo = "test";
             if (window.depview.editEnabled) {
@@ -79,20 +103,28 @@ function initWindow() {
               data('powertip', node.metadata).
               appendTo(window.depview.paper);
             jQuery.contextMenu({
-                    selector: "#"+escapeId(node.name),
-                    position: function(opt, x, y){
-                        opt.$menu.css({position: "absolute", top: y, left: x});
-                    },
-                    items:{
-                        jim: {name: "jim", callback: function(){alert("JIM!!!");}},
-                        dave: { name: "dave", callback: function (){alert("DAVE!!!");}},
-                        one: {name: "one", callback: function(){alert("One");}},
-                        two: {name: "two", callback: function(){alert("TWO");}},
-                        three: {name: "three", callback: function(){alert("THREE");}}
+              selector: "#"+escapeId(node.name),
+              position: function(opt, x, y){
+                  opt.$menu.css({position: "absolute", top: y, left: x});
+              },
+              items:{
+                  buildopt: {name: "Build", callback: function buildfun(){
+                    var url = node.url+"build?delay=0sec";
+                    var method = "POST";
+                    var async = true;
+                    var request = new XMLHttpRequest();
+                    request.onload = function(){
+                        console.log("Building");
                     }
+                    request.open(method, url, async);
+                    request.send();
+                    return "built";
+                  }},
+                  zoom: {name: "Zoom Out", callback: function() {$("#paper").animate({ 'zoom': 1 }, 'slow');}},
+                  jim: {name: "Center View", callback: function(){$("#"+escapeId(node.name)).center();}}
+              }
             });
-          });
-
+          })
           top = top + cluster.vSize + space
           // xOverall = xOverall + cluster.hSize + space
         });
