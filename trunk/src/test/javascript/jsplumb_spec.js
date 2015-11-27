@@ -148,6 +148,12 @@ describe("graph view", function() {
   it("displays the color of the node", function() {
     expect(testElement.attr("style")).toContain("blue");
   });
+
+  describe ("collapse expand nodes", function() {
+    it("displays the font awesome minus by default nodes", function() {
+      expect(testElement.children(".fa-minus-circle")).toExist();
+    });
+  });
 });
 
 describe('Escape id function', function(){

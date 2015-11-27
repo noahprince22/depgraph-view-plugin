@@ -29,10 +29,10 @@ function initWindow() {
           fillStyle : '#558822'
         } ],
         // blue endpoints 7px; green endpoints 7px.
-        Endpoints : [ [ "Dot", {
-          radius : 6
-        } ], [ "Dot", {
-          radius : 6
+        Endpoints : [ [ "Blank", {
+          radius : 0
+        } ], [ "Blank", {
+          radius : 0
         } ] ],
 
         // def for new connector (drag n' drop)
@@ -92,6 +92,14 @@ function initWindow() {
               nodeString = nodeString + '<div class="ep"/>';
             }
             nodeString = nodeString + '<a href="' + node.url + '">' + node.name + '</a></div>';
+            var minusIcon = "<a class=\"fa fa-lg fa-minus-circle\" " +
+                            "style=\"" +
+                            "position: absolute; " +
+                            "bottom: 0px; " +
+                            "left: 40%;" +
+                            "cursor: pointer\"" +
+                            "></a>";
+
             jQuery(nodeString).
               addClass('window').
               attr('id', escapeId(node.name)).
@@ -101,7 +109,9 @@ function initWindow() {
               css('background', node.color).
               powerTip({followMouse: true}).
               data('powertip', node.metadata).
+              append(minusIcon).
               appendTo(window.depview.paper);
+
             jQuery.contextMenu({
               selector: "#"+escapeId(node.name),
               position: function(opt, x, y){
