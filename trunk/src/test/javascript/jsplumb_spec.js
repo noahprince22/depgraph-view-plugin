@@ -1,6 +1,7 @@
 describe("graph view", function() {
   var success;
   var testElement;
+  var testElement2;
   var basicGraph = {
     "status": 200,
     "edges":[
@@ -93,6 +94,7 @@ describe("graph view", function() {
       window.depview.init();
 
       testElement = window.depview.paper.children("#test");
+      testElement2 = window.depview.paper.children("#test2");
     });
     
     it ("adds the test nodes via jquery", function() {
@@ -152,6 +154,22 @@ describe("graph view", function() {
   describe ("collapse expand nodes", function() {
     it("displays the font awesome minus by default nodes", function() {
       expect(testElement.children(".fa-minus-circle")).toExist();
+    });
+
+    it("hides all children when the minus is clicked", function() {
+        testElement2.children(".fa-minus-circle").trigger( "click" );
+        expect(testElement).not.toBeVisible();
+
+        expect(testElement2.children(".fa-plus-circle").css("visibility")).toEqual("visible");
+        expect(testElement2.children(".fa-minus-circle").css("visibility")).toEqual("hidden");
+    });
+
+    it("unhides all children when the plus is clicked", function() {
+      testElement2.children(".fa-plus-circle").trigger( "click" );
+      expect(testElement).toBeVisible();
+
+      expect(testElement2.children(".fa-plus-circle").css("visibility")).toEqual("hidden");
+      expect(testElement2.children(".fa-minus-circle").css("visibility")).toEqual("visible");
     });
   });
 });

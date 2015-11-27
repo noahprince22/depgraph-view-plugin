@@ -53,29 +53,29 @@ function initWindow() {
                              ]
 
       });
-    var nodeList = [];
-    jQuery.fn.center = function () {
-    //Calculate the clicked node distance from the chosen center point
-    var paperLeft = $('#paper').position().left;
-    var paperTop = $('#paper').position().top;
-    var centerLeft = ($('#paper').width()*.001)+paperLeft
-    var centerTop =($('#paper').height()*.001)+paperTop
-    var xDiff = centerLeft- $(this).position().left;
-    var yDiff = centerTop-$(this).position().top;
-    //loop through and change all nodes position relative to centerpoint
-    var arrayLength = nodeList.length;
-    for (var i = 0; i < arrayLength; i++) {
-      $("#"+nodeList[i]).css("position","absolute");
-      positionCurr = $("#"+nodeList[i]).position();
-      leftCurr  = positionCurr.left;
-      topCurr = positionCurr.top;
-      newLeft = leftCurr + xDiff;
-      newTop = topCurr + yDiff;
-      $("#"+nodeList[i]).css("left", newLeft+"px");
-      $("#"+nodeList[i]).css("top", newTop+"px");
-    }
+      var nodeList = [];
+      jQuery.fn.center = function () {
+        //Calculate the clicked node distance from the chosen center point
+        var paperLeft = $('#paper').position().left;
+        var paperTop = $('#paper').position().top;
+        var centerLeft = ($('#paper').width()*.001)+paperLeft
+        var centerTop =($('#paper').height()*.001)+paperTop
+        var xDiff = centerLeft- $(this).position().left;
+        var yDiff = centerTop-$(this).position().top;
+        //loop through and change all nodes position relative to centerpoint
+        var arrayLength = nodeList.length;
+        for (var i = 0; i < arrayLength; i++) {
+          $("#"+nodeList[i]).css("position","absolute");
+          positionCurr = $("#"+nodeList[i]).position();
+          leftCurr  = positionCurr.left;
+          topCurr = positionCurr.top;
+          newLeft = leftCurr + xDiff;
+          newTop = topCurr + yDiff;
+          $("#"+nodeList[i]).css("left", newLeft+"px");
+          $("#"+nodeList[i]).css("top", newTop+"px");
+        }
 
-}
+      }
       jQuery.getJSON('graph.json', function(data) {
         var top = 3;
         var space = 150;
@@ -93,12 +93,21 @@ function initWindow() {
             }
             nodeString = nodeString + '<a href="' + node.url + '">' + node.name + '</a></div>';
             var minusIcon = "<a class=\"fa fa-lg fa-minus-circle\" " +
-                            "style=\"" +
-                            "position: absolute; " +
-                            "bottom: 0px; " +
-                            "left: 40%;" +
-                            "cursor: pointer\"" +
-                            "></a>";
+                  "style=\"" +
+                  "position: absolute; " +
+                  "bottom: 0px; " +
+                  "left: 40%;" +
+                  "cursor: pointer\"" +
+                  "></a>";
+            var plusIcon = "<a class=\"fa fa-lg fa-plus-circle\" " +
+                  "style=\"" +
+                  "visibility: hidden;" +
+                  "position: absolute; " +
+                  "bottom: 0px; " +
+                  "left: 40%;" +
+                  "cursor: pointer\"" +
+                  "></a>";
+
 
             jQuery(nodeString).
               addClass('window').
@@ -110,34 +119,58 @@ function initWindow() {
               powerTip({followMouse: true}).
               data('powertip', node.metadata).
               append(minusIcon).
+              append(plusIcon).
               appendTo(window.depview.paper);
+
+            jQuery("#" + escapeId(node.name) + " .fa-minus-circle").click(function(event) {
+              jQuery.each(data["edges"], function(i, edge) {
+                if(edge.from == node.name) {
+                  jQuery("#" + escapeId(edge.to)).hide();
+                }
+              });
+
+              jQuery("#" + escapeId(node.name) + " .fa-plus-circle").css("visibility", "visible");
+              $(event.target).css("visibility", "hidden");
+            });
+
+            jQuery("#" + escapeId(node.name) + " .fa-plus-circle").click(function(event) {
+              jQuery.each(data["edges"], function(i, edge) {
+                if(edge.from == node.name) {
+                  jQuery("#" + escapeId(edge.to)).show();
+                }
+              });
+
+              jQuery("#" + escapeId(node.name) + " .fa-minus-circle").css("visibility", "visible");
+              $(event.target).css("visibility", "hidden");
+            });
 
             jQuery.contextMenu({
               selector: "#"+escapeId(node.name),
               position: function(opt, x, y){
-                  opt.$menu.css({position: "absolute", top: y, left: x});
+                opt.$menu.css({position: "absolute", top: y, left: x});
               },
               items:{
-                  buildopt: {name: "Build", callback: function buildfun(){
-                    var url = node.url+"build?delay=0sec";
-                    var method = "POST";
-                    var async = true;
-                    var request = new XMLHttpRequest();
-                    request.onload = function(){
-                        console.log("Building");
-                    }
-                    request.open(method, url, async);
-                    request.send();
-                    return "built";
-                  }},
-                  zoom: {name: "Zoom Out", callback: function() {$("#paper").animate({ 'zoom': 1 }, 'slow');}},
-                  jim: {name: "Center View", callback: function(){$("#"+escapeId(node.name)).center();}}
+                buildopt: {name: "Build", callback: function buildfun(){
+                  var url = node.url+"build?delay=0sec";
+                  var method = "POST";
+                  var async = true;
+                  var request = new XMLHttpRequest();
+                  request.onload = function(){
+                    console.log("Building");
+                  }
+                  request.open(method, url, async);
+                  request.send();
+                  return "built";
+                }},
+                zoom: {name: "Zoom Out", callback: function() {$("#paper").animate({ 'zoom': 1 }, 'slow');}},
+                jim: {name: "Center View", callback: function(){$("#"+escapeId(node.name)).center();}}
               }
             });
           })
           top = top + cluster.vSize + space
           // xOverall = xOverall + cluster.hSize + space
         });
+
         // definitions for drag/drop connections
         jQuery(".ep").each(function(idx, current) {
           var p = jQuery(current).parent()
@@ -242,4 +275,5 @@ jsPlumb.bind("ready", function() {
 
   jsPlumb.setRenderMode(jsPlumb.SVG);
   depview.init();
+
 });
