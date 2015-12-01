@@ -24,7 +24,11 @@ package hudson.plugins.depgraph_view.model.graph;
 
 import com.google.common.base.Preconditions;
 import hudson.model.AbstractProject;
-
+import hudson.model.Run;
+import hudson.model.Job;
+import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 /**
  * A Node in the DependencyGraph, which corresponds to a Project
  */
@@ -45,11 +49,55 @@ public class ProjectNode {
     }
 
     public String getColor() {
-      return project.getIconColor().toString();
+      return project.getIconColor().getHtmlBaseColor();
     }
+
+    public String getMetadata(){
+      String meta = "status: " + getStatus() + "<br>";
+      meta = meta + "lastBuild: " + getLastBuildDate() + "<br>";
+      meta = meta + "averageDuration: " + getAvgDuration();
+      return meta;
+    }
+
+    public String getStatus() {
+      return project.getIconColor().getDescription();
+    }
+
+    public String getAvgDuration(){
+      int cnt = 0;
+      int sum = 0;
+      List<Run> builds = getBuilds();
+      for(int i=builds.size()-1;i>=0&&cnt<builds.size();i--){
+        sum += (builds.get(i)!=null) ? builds.get(i).getDuration() : 0;
+        if(builds.get(i)!=null)cnt++;
+      }
+      double avg = (cnt > 0) ? ((double)sum/(cnt*1000)) : 0;
+      return Double.toString(avg) + "s";
+    }
+
+    public String getLastBuildDate(){
+      Run build = project.getLastBuild();
+      return (build!=null) ? build.getTimestamp().getTime().toString() : "not built";
+    }
+
+    // public String getWorkspace(){
+    //   return (project.getWorkspace()!=null) ? project.getWorkspace().toString() : "unknown";
+    // }
+
 
     public AbstractProject<?, ?> getProject() {
         return project;
+    }
+
+    public List<Run> getBuilds(){
+      List<Run> lastBuilds = new ArrayList<Run>();
+      for (Job item : project.getAllJobs()) {
+          Job job = (Job) item;
+          Run lb = job.getLastBuild();
+          while (lb != null && (lb.hasntStartedYet() || lb.isBuilding()))lb = lb.getPreviousBuild();
+          lastBuilds.add(lb);
+      }
+      return lastBuilds;
     }
 
     @Override

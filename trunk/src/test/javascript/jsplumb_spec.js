@@ -1,6 +1,7 @@
 describe("graph view", function() {
   var success;
   var testElement;
+  var testElement2;
   var basicGraph = {
     "status": 200,
     "edges":[
@@ -84,7 +85,7 @@ describe("graph view", function() {
       });
 
       // We need to have a paper to work with for the tests
-      jQuery(document.body).prepend("<div id='paper'></div>")
+      jQuery(document.body).prepend("<div id='paper'></div>");
 
       // Init the window, which gets depview on it
       initWindow();
@@ -93,11 +94,49 @@ describe("graph view", function() {
       window.depview.init();
 
       testElement = window.depview.paper.children("#test");
+      testElement2 = window.depview.paper.children("#test2");
     });
-
+    
     it ("adds the test nodes via jquery", function() {
       expect(testElement.size()).toExist();
     });
+  });
+
+  describe ("context menu", function() {
+    beforeEach(function() {
+      jQuery(document.getElementById("test")).contextMenu();
+      
+    });
+
+    it("displays a context menu on right click", function(){
+      expect($(".context-menu-root")).toBeVisible();
+    });
+
+    it("builds on clicking build", function(){
+      expect($(".context-menu-root")).toBeVisible();
+      spyOn(XMLHttpRequest.prototype, 'send');
+      $('.context-menu-item').eq(3).trigger('mouseup');
+      expect(XMLHttpRequest.prototype.send).toHaveBeenCalled();
+    });
+
+    it("moves the node clicked to the picked center", function(){
+    	//debugger;
+      var clickedNodeName = basicGraph['clusters'][0]['nodes'][0]['name']
+      var paperLeft = $('#paper').position().left;
+      var centerLeft = ($('#paper').width()*.001)+paperLeft;
+      $("#"+clickedNodeName).center();
+      //debugger;
+      $("#"+clickedNodeName).center();
+      expect(parseFloat(($("#"+clickedNodeName)).position().left).toFixed(0)).
+      	toEqual(parseFloat(($('#paper').width()*.001)+paperLeft).toFixed(0));
+    });
+
+    it("Sets zoom to 1 on zoom out menu click", function(){
+      $("#paper").animate({ 'zoom': 1 }, 'slow');
+      //debugger;
+      expect($("#paper").css('zoom')).toEqual('1');
+    });
+
   });
 
   describe ("tooltip on node hover", function() {
@@ -110,6 +149,28 @@ describe("graph view", function() {
 
   it("displays the color of the node", function() {
     expect(testElement.attr("style")).toContain("blue");
+  });
+
+  describe ("collapse expand nodes", function() {
+    it("displays the font awesome minus by default nodes", function() {
+      expect(testElement.children(".fa-minus-circle")).toExist();
+    });
+
+    it("hides all children when the minus is clicked", function() {
+        testElement2.children(".fa-minus-circle").trigger( "click" );
+        expect(testElement).not.toBeVisible();
+
+        expect(testElement2.children(".fa-plus-circle").css("visibility")).toEqual("visible");
+        expect(testElement2.children(".fa-minus-circle").css("visibility")).toEqual("hidden");
+    });
+
+    it("unhides all children when the plus is clicked", function() {
+      testElement2.children(".fa-plus-circle").trigger( "click" );
+      expect(testElement).toBeVisible();
+
+      expect(testElement2.children(".fa-plus-circle").css("visibility")).toEqual("hidden");
+      expect(testElement2.children(".fa-minus-circle").css("visibility")).toEqual("visible");
+    });
   });
 });
 
