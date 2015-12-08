@@ -9,6 +9,30 @@ function getJobDiv(jobName) {
   return jQuery('#' + escapeId(jobName));
 }
 
+function hideChildren(nodeName, data) {
+  jQuery.each(data["edges"], function(i, edge) {
+    if(edge.from == nodeName) {
+      jQuery("#" + escapeId(edge.to)).hide();
+      hideChildren(edge.to, data); // hide the children recursively
+    }
+  });
+
+  jQuery("#" + escapeId(nodeName) + " .fa-plus-circle").css("visibility", "visible");
+  $("#" + escapeId(nodeName) + " .fa-minus-circle").css("visibility", "hidden");
+};
+
+function showChildren(nodeName, data) {
+  jQuery.each(data["edges"], function(i, edge) {
+    if(edge.from == nodeName) {
+      jQuery("#" + escapeId(edge.to)).show();
+      showChildren(edge.to, data); // show the children recursively
+    }
+  });
+
+  jQuery("#" + escapeId(nodeName) + " .fa-minus-circle").css("visibility", "visible");
+  $("#" + escapeId(nodeName) + " .fa-plus-circle").css("visibility", "hidden");
+}
+
 function initWindow() {
   window.depview = {
     paper: jQuery("#paper"),
@@ -123,25 +147,11 @@ function initWindow() {
               appendTo(window.depview.paper);
 
             jQuery("#" + escapeId(node.name) + " .fa-minus-circle").click(function(event) {
-              jQuery.each(data["edges"], function(i, edge) {
-                if(edge.from == node.name) {
-                  jQuery("#" + escapeId(edge.to)).hide();
-                }
-              });
-
-              jQuery("#" + escapeId(node.name) + " .fa-plus-circle").css("visibility", "visible");
-              $(event.target).css("visibility", "hidden");
+              hideChildren(escapeId(node.name), data);
             });
 
             jQuery("#" + escapeId(node.name) + " .fa-plus-circle").click(function(event) {
-              jQuery.each(data["edges"], function(i, edge) {
-                if(edge.from == node.name) {
-                  jQuery("#" + escapeId(edge.to)).show();
-                }
-              });
-
-              jQuery("#" + escapeId(node.name) + " .fa-minus-circle").css("visibility", "visible");
-              $(event.target).css("visibility", "hidden");
+              showChildren(escapeId(node.name), data);
             });
 
             jQuery.contextMenu({
@@ -275,5 +285,4 @@ jsPlumb.bind("ready", function() {
 
   jsPlumb.setRenderMode(jsPlumb.SVG);
   depview.init();
-
 });
