@@ -285,5 +285,4 @@ jsPlumb.bind("ready", function() {
 
   jsPlumb.setRenderMode(jsPlumb.SVG);
   depview.init();
-
 });

@@ -107,8 +107,8 @@ describe("graph view", function() {
       window.depview.init();
 
       testElements = [window.depview.paper.children("#test"),
-                     window.depview.paper.children("#test2"),
-                     window.depview.paper.children("#test3")]
+                      window.depview.paper.children("#test2"),
+                      window.depview.paper.children("#test3")]
     });
     
     it ("adds the test nodes via jquery", function() {
@@ -203,6 +203,6 @@ describe("graph view", function() {
 
 describe('Escape id function', function(){
   it('replaces all characters except numbers and letters',function() {
-     expect(escapeId('123456')).toEqual('123456');
-   });
+    expect(escapeId('123456')).toEqual('123456');
+  });
 });
