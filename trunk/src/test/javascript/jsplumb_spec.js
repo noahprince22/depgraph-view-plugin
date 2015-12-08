@@ -2,6 +2,8 @@ describe("graph view", function() {
   var success;
   var testElement;
   var testElement2;
+
+  // test2 -> test -> test3
   var basicGraph = {
     "status": 200,
     "edges":[
@@ -9,12 +11,24 @@ describe("graph view", function() {
         "to": "test",
         "from": "test2",
         "type": "dep"
-      }
+      },
+      {
+        "to": "test3",
+        "from": "test",
+        "type": "dep"
+      },
     ],
     "clusters":[
       {
         "vSize": 100,
         "nodes": [
+          {"name": "test3",
+           "fullName": "test3",
+           "url": "http://localhost:8080/jenkins/job/test3/",
+           "metadata": "Some stuff",
+           "color": "Red",
+           "x": 0,
+           "y": 0},
           {"name": "test2",
            "fullName": "test2",
            "url": "http://localhost:8080/jenkins/job/test2/",
@@ -95,6 +109,7 @@ describe("graph view", function() {
 
       testElement = window.depview.paper.children("#test");
       testElement2 = window.depview.paper.children("#test2");
+      testElement3 = window.depview.paper.children("#test3");
     });
     
     it ("adds the test nodes via jquery", function() {
@@ -157,11 +172,14 @@ describe("graph view", function() {
     });
 
     it("hides all children when the minus is clicked", function() {
-        testElement2.children(".fa-minus-circle").trigger( "click" );
-        expect(testElement).not.toBeVisible();
+      testElement2.children(".fa-minus-circle").trigger( "click" );
+      expect(testElement).not.toBeVisible();
 
-        expect(testElement2.children(".fa-plus-circle").css("visibility")).toEqual("visible");
-        expect(testElement2.children(".fa-minus-circle").css("visibility")).toEqual("hidden");
+      expect(testElement2.children(".fa-plus-circle").css("visibility")).toEqual("visible");
+      expect(testElement2.children(".fa-minus-circle").css("visibility")).toEqual("hidden");
+
+      expect(testElement3.children(".fa-plus-circle").css("visibility")).toEqual("visible");
+      expect(testElement3.children(".fa-minus-circle").css("visibility")).toEqual("hidden");
     });
 
     it("unhides all children when the plus is clicked", function() {
@@ -170,6 +188,9 @@ describe("graph view", function() {
 
       expect(testElement2.children(".fa-plus-circle").css("visibility")).toEqual("hidden");
       expect(testElement2.children(".fa-minus-circle").css("visibility")).toEqual("visible");
+
+      expect(testElement3.children(".fa-plus-circle").css("visibility")).toEqual("hidden");
+      expect(testElement3.children(".fa-minus-circle").css("visibility")).toEqual("visible");
     });
   });
 });
