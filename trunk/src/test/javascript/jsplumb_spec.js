@@ -1,7 +1,6 @@
 describe("graph view", function() {
   var success;
-  var testElement;
-  var testElement2;
+  var testElements;
 
   // test2 -> test -> test3
   var basicGraph = {
@@ -26,7 +25,7 @@ describe("graph view", function() {
            "fullName": "test3",
            "url": "http://localhost:8080/jenkins/job/test3/",
            "metadata": "Some stuff",
-           "color": "Red",
+           "color": "blue",
            "x": 0,
            "y": 0},
           {"name": "test2",
@@ -107,49 +106,50 @@ describe("graph view", function() {
       // init depview
       window.depview.init();
 
-      testElement = window.depview.paper.children("#test");
-      testElement2 = window.depview.paper.children("#test2");
-      testElement3 = window.depview.paper.children("#test3");
+      testElements = [window.depview.paper.children("#test"),
+                     window.depview.paper.children("#test2"),
+                     window.depview.paper.children("#test3")]
     });
     
     it ("adds the test nodes via jquery", function() {
-      expect(testElement.size()).toExist();
+      jQuery.each(testElements, function(index, element) {
+        expect(element.size()).toExist();
+      });
     });
   });
 
   describe ("context menu", function() {
     beforeEach(function() {
       jQuery(document.getElementById("test")).contextMenu();
-      
     });
 
     it("displays a context menu on right click", function(){
-      expect($(".context-menu-root")).toBeVisible();
+      expect(jQuery(".context-menu-root")).toBeVisible();
     });
 
     it("builds on clicking build", function(){
-      expect($(".context-menu-root")).toBeVisible();
+      expect(jQuery(".context-menu-root")).toBeVisible();
       spyOn(XMLHttpRequest.prototype, 'send');
-      $('.context-menu-item').eq(3).trigger('mouseup');
+      jQuery('.context-menu-item').eq(3).trigger('mouseup');
       expect(XMLHttpRequest.prototype.send).toHaveBeenCalled();
     });
 
     it("moves the node clicked to the picked center", function(){
     	//debugger;
       var clickedNodeName = basicGraph['clusters'][0]['nodes'][0]['name']
-      var paperLeft = $('#paper').position().left;
-      var centerLeft = ($('#paper').width()*.001)+paperLeft;
-      $("#"+clickedNodeName).center();
+      var paperLeft = jQuery('#paper').position().left;
+      var centerLeft = (jQuery('#paper').width()*.001)+paperLeft;
+      jQuery("#"+clickedNodeName).center();
       //debugger;
-      $("#"+clickedNodeName).center();
-      expect(parseFloat(($("#"+clickedNodeName)).position().left).toFixed(0)).
-      	toEqual(parseFloat(($('#paper').width()*.001)+paperLeft).toFixed(0));
+      jQuery("#"+clickedNodeName).center();
+      expect(parseFloat((jQuery("#"+clickedNodeName)).position().left).toFixed(0)).
+      	toEqual(parseFloat((jQuery('#paper').width()*.001)+paperLeft).toFixed(0));
     });
 
     it("Sets zoom to 1 on zoom out menu click", function(){
-      $("#paper").animate({ 'zoom': 1 }, 'slow');
+      jQuery("#paper").animate({ 'zoom': 1 }, 'slow');
       //debugger;
-      expect($("#paper").css('zoom')).toEqual('1');
+      expect(jQuery("#paper").css('zoom')).toEqual('1');
     });
 
   });
@@ -158,39 +158,45 @@ describe("graph view", function() {
     it ("displays the powertip on hover with the correct data", function() {
       // There is currently no good way to test what happens when you 'hover'
       //   mouseover does not seem to work for this
-      expect(testElement.data().powertip).toEqual("Some stuff");
+      jQuery.each(testElements, function(index, element) {
+        expect(element.data().powertip).toEqual("Some stuff");
+      });
     });
   });
 
   it("displays the color of the node", function() {
-    expect(testElement.attr("style")).toContain("blue");
+    jQuery.each(testElements, function(index, element) {
+      expect(element.attr("style")).toContain("blue");
+    });
   });
 
   describe ("collapse expand nodes", function() {
     it("displays the font awesome minus by default nodes", function() {
-      expect(testElement.children(".fa-minus-circle")).toExist();
+      jQuery.each(testElements, function(index, element) {
+        expect(element.children(".fa-minus-circle")).toExist();
+      });
     });
 
     it("hides all children when the minus is clicked", function() {
-      testElement2.children(".fa-minus-circle").trigger( "click" );
-      expect(testElement).not.toBeVisible();
+      testElements[1].children(".fa-minus-circle").trigger( "click" );
+      expect(testElements[0]).not.toBeVisible();
 
-      expect(testElement2.children(".fa-plus-circle").css("visibility")).toEqual("visible");
-      expect(testElement2.children(".fa-minus-circle").css("visibility")).toEqual("hidden");
+      expect(testElements[1].children(".fa-plus-circle").css("visibility")).toEqual("visible");
+      expect(testElements[1].children(".fa-minus-circle").css("visibility")).toEqual("hidden");
 
-      expect(testElement3.children(".fa-plus-circle").css("visibility")).toEqual("visible");
-      expect(testElement3.children(".fa-minus-circle").css("visibility")).toEqual("hidden");
+      expect(testElements[2].children(".fa-plus-circle").css("visibility")).toEqual("visible");
+      expect(testElements[2].children(".fa-minus-circle").css("visibility")).toEqual("hidden");
     });
 
     it("unhides all children when the plus is clicked", function() {
-      testElement2.children(".fa-plus-circle").trigger( "click" );
-      expect(testElement).toBeVisible();
+      testElements[1].children(".fa-plus-circle").trigger( "click" );
+      expect(testElements[0]).toBeVisible();
 
-      expect(testElement2.children(".fa-plus-circle").css("visibility")).toEqual("hidden");
-      expect(testElement2.children(".fa-minus-circle").css("visibility")).toEqual("visible");
+      expect(testElements[1].children(".fa-plus-circle").css("visibility")).toEqual("hidden");
+      expect(testElements[1].children(".fa-minus-circle").css("visibility")).toEqual("visible");
 
-      expect(testElement3.children(".fa-plus-circle").css("visibility")).toEqual("hidden");
-      expect(testElement3.children(".fa-minus-circle").css("visibility")).toEqual("visible");
+      expect(testElements[2].children(".fa-plus-circle").css("visibility")).toEqual("hidden");
+      expect(testElements[2].children(".fa-minus-circle").css("visibility")).toEqual("visible");
     });
   });
 });
