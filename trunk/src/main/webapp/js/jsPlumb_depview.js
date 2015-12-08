@@ -143,6 +143,13 @@ function initWindow() {
               jQuery("#" + escapeId(node.name) + " .fa-minus-circle").css("visibility", "visible");
               $(event.target).css("visibility", "hidden");
             });
+            jQuery("#" + escapeId(node.name)).mouseenter(function(){
+              mouseOver = 1;
+              console.log("mouseOver");
+            }).mouseleave(function(){
+              mouseOver = 0;
+              console.log("mouse not Over");
+            });
 
             jQuery.contextMenu({
               selector: "#"+escapeId(node.name),
@@ -181,21 +188,22 @@ function initWindow() {
 	          });
           }
         });
-        var flag = 0;
+        var mouseDown = 0;
         var origX,origY;
+        var mouseOver = 0;
         jQuery("#paper").mousedown(function(e){
           console.log("mousedown");
-          flag = 1;
+          mouseDown = 1;
           origX = e.pageX, origY = e.pageY;
         });
         jQuery("#paper").mouseup(function(){
-          flag = 0;
+          mouseDown = 0;
           console.log("mouseup");
           console.log(flag);
 
         });
         jQuery("#paper").mousemove(function(e){
-          if(flag){
+          if(mouseDown&&!mouseOver){
             moveNodes(e.pageX-origX, e.pageY-origY);
             origX = e.pageX, origY = e.pageY;
           }
