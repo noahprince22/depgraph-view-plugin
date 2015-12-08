@@ -45,8 +45,8 @@
       </p>
 
         <button id="ZoomIn">Zoom In</button>
-        <button id="ZoomOut">Zoom Out</button>  
-        <button id="ZoomReset">Zoom Reset</button>          
+        <button id="ZoomOut">Zoom Out</button>
+        <button id="ZoomReset">Zoom Reset</button>
 
             <div id="paper"></div> <!-- style="position:relative;margin-top:100px;" -->
 
@@ -56,8 +56,8 @@
 
 		<script>
 			$(function(){
-				$(".ep").draggable();					
-				$("#paper").draggable();
+				$(".ep").draggable();
+				//$("#paper").draggable();
 			});
 		</script>
                 <script type="text/javascript" src="${rootURL}/plugin/depgraph-view/js/vendor/jquery.contextMenu.js"></script>
@@ -68,7 +68,7 @@
 
 
             <script type="text/javascript">window.depview.editEnabled=${it.isEditFunctionInJSViewEnabled()}</script>
-            
+
 		</l:main-panel>
 	</l:layout>
 </j:jelly>

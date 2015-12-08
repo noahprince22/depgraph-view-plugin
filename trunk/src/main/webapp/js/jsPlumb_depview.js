@@ -180,7 +180,36 @@ function initWindow() {
 	            parent: p
 	          });
           }
-        })
+        });
+        var flag = 0;
+        var origX,origY;
+        jQuery("#paper").mousedown(function(e){
+          console.log("mousedown");
+          flag = 1;
+          origX = e.pageX, origY = e.pageY;
+        });
+        jQuery("#paper").mouseup(function(){
+          flag = 0;
+          console.log("mouseup");
+          console.log(flag);
+
+        });
+        jQuery("#paper").mousemove(function(e){
+          if(flag){
+            moveNodes(e.pageX-origX, e.pageY-origY);
+            origX = e.pageX, origY = e.pageY;
+          }
+        });
+        function moveNodes(dx,dy){
+          console.log(dx,dy);
+          jQuery("#paper > .window").each(function(){
+            console.log(jQuery(this));
+            console.log(jQuery(this).css("left"));
+            console.log(jQuery(this).css("top"));
+            jQuery(this).css({left:jQuery(this).position().left+dx+'px'});
+            jQuery(this).css({top:jQuery(this).position().top+dy+'px'});
+          });
+        }
 
         jsPlumb.makeTarget(jsPlumb.getSelector('.window'), {
           anchor : "Continuous"
