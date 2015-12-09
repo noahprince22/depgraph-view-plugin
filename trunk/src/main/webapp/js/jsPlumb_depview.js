@@ -9,10 +9,23 @@ function getJobDiv(jobName) {
   return jQuery('#' + escapeId(jobName));
 }
 
+//Sets edge visibility
+function setEdgeVis(src, trg, setVis){
+  //query jsplumb edge
+  var allConns= jsPlumb.getAllConnections()
+  var allConnsArray=allConns['dep']
+  //iterate through find right one
+  for(i = 0; i< allConnsArray.length; i++){
+    if(src==allConnsArray[i].source[0].id && trg == allConnsArray[i].target[0].id)
+    allConnsArray[i].setVisible(setVis)
+    }
+}
+
 function hideChildren(nodeName, data) {
   jQuery.each(data["edges"], function(i, edge) {
     if(edge.from == nodeName) {
       jQuery("#" + escapeId(edge.to)).hide();
+      setEdgeVis(edge.from,edge.to, false) //hide edge
       hideChildren(edge.to, data); // hide the children recursively
     }
   });
@@ -25,7 +38,9 @@ function showChildren(nodeName, data) {
   jQuery.each(data["edges"], function(i, edge) {
     if(edge.from == nodeName) {
       jQuery("#" + escapeId(edge.to)).show();
+      setEdgeVis(edge.from,edge.to, true)//show edge
       showChildren(edge.to, data); // show the children recursively
+
     }
   });
 
@@ -62,7 +77,7 @@ function initWindow() {
         // def for new connector (drag n' drop)
         // - line 2px
         PaintStyle : {
-          lineWidth : 2,
+          lineWidth : 1,
           strokeStyle : window.depview.colordep,
           joinstyle:"round"},
 
@@ -206,7 +221,7 @@ function initWindow() {
             source : from,
             target : to,
             scope: edge["type"],
-            paintStyle:{lineWidth : 2}
+            paintStyle:{lineWidth : 2},
           }
           if("copy" == edge["type"]){
             connOptions.paintStyle.strokeStyle = window.depview.colorcopy;
@@ -235,7 +250,11 @@ function initWindow() {
 	            });
             }
           }
+
         });
+
+
+
 
         if(window.depview.editEnabled) {
 	        jsPlumb.bind("jsPlumbConnection", function(info) {
@@ -277,6 +296,7 @@ function initWindow() {
 };
 
 initWindow();
+
 
 // start jsPlumb
 jsPlumb.bind("ready", function() {
