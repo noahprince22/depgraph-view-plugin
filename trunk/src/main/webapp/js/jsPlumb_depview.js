@@ -116,7 +116,18 @@ function initWindow() {
           $("#"+nodeList[i]).css("top", newTop+"px");
         }
 
+        var allConns= document.getElementsByClassName("_jsplumb_connector");
+        for(i = 0; i< allConns.length; i++){
+          positionCurr = $(allConns[i]).position();
+          leftCurr  = positionCurr.left;
+          topCurr = positionCurr.top;
+          newLeft = leftCurr + xDiff;
+          newTop = topCurr + yDiff;
+          $(allConns[i]).attr("style", "position:absolute;left:"+newLeft+"px;top:"+newTop+"px;");
+        }
+
       }
+
       jQuery.getJSON('graph.json', function(data) {
         var top = 3;
         var space = 150;
@@ -216,6 +227,7 @@ function initWindow() {
                   mouseOver = 0;
                   mouseDown = 0;
                 }}
+
               }
             });
           })
