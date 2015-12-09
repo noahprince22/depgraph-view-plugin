@@ -1,7 +1,10 @@
     var currentZoom = 1.0;
 
-    $(document).ready(function () {
-        $('#ZoomIn').click(
+    
+  $(document).ready(function () {
+    
+    alert("Hey!");
+    $('#ZoomIn').click(
             function () {
                 console.log('zoom in');
                 $('#paper').animate({ 'zoom': currentZoom += .1 }, 'slow');

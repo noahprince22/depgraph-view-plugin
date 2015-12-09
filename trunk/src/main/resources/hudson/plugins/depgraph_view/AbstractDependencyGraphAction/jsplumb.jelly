@@ -26,7 +26,8 @@
   <link rel="stylesheet" href="${h2.inferHudsonURL(context.currentRequest)}/plugin/depgraph-view/css/depview.css"></link>
   <link rel="stylesheet" href="https://raw.githubusercontent.com/swisnl/jQuery-contextMenu/master/dist/jquery.contextMenu.css"></link>
   <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.css"></link>
-  <link rel="stylesheet" href="${h2.inferHudsonURL(context.currentRequest)}/plugin/depgraph-view/css/jquery.powertip.min.css"></link>
+<link rel="stylesheet" href="http//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"></link> 
+ <link rel="stylesheet" href="${h2.inferHudsonURL(context.currentRequest)}/plugin/depgraph-view/css/jquery.powertip.min.css"></link>
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"></link>
 	<l:layout title="${it.title}">
 		<st:include page="sidepanel.jelly" />
@@ -47,12 +48,16 @@
         <button id="ZoomIn">Zoom In</button>
         <button id="ZoomOut">Zoom Out</button>  
         <button id="ZoomReset">Zoom Reset</button>          
-
+        <button id="use_slider">Use Slider</button>
+       <br />
+           <div id="slider" style="display:none"></div>
+       <br />
             <div id="paper"></div> <!-- style="position:relative;margin-top:100px;" -->
 
                 <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
-      			<script type='text/javascript' src='${rootURL}/plugin/depgraph-view/js/jquery.jsPlumb-1.4.1-all-min.js'></script>
-      			<script type="text/javascript" src="${rootURL}/plugin/depgraph-view/js/jsPlumb_depview.js"></script>
+                <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+      		<script type='text/javascript' src='${rootURL}/plugin/depgraph-view/js/jquery.jsPlumb-1.4.1-all-min.js'></script>      	
+		<script type="text/javascript" src="${rootURL}/plugin/depgraph-view/js/jsPlumb_depview.js"></script>
 
 		<script>
 			$(function(){
