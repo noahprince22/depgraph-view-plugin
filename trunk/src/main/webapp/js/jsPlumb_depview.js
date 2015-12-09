@@ -206,6 +206,14 @@ function initWindow() {
             origX = e.pageX, origY = e.pageY;
           }
         });
+        
+        /**
+         *
+         *
+         * @param dx change for x direction of mouse position (from last point the mousemove event called)
+         * @param dy change for y direction of mouse position
+         * @see movement of all the project nodes
+         */
         function moveNodes(dx,dy){
           console.log(dx,dy);
           jQuery("#paper > .window").each(function(){
