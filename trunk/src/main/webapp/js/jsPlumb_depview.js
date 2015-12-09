@@ -199,8 +199,6 @@ function initWindow() {
         jQuery("#paper").mouseup(function(){
           mouseDown = 0;
           console.log("mouseup");
-          console.log(flag);
-
         });
         jQuery("#paper").mousemove(function(e){
           if(mouseDown&&!mouseOver){
