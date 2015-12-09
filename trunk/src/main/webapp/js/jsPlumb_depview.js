@@ -170,6 +170,13 @@ function initWindow() {
             jQuery("#" + escapeId(node.name) + " .fa-plus-circle").click(function(event) {
               showChildren(escapeId(node.name), data);
             });
+            jQuery("#" + escapeId(node.name)).mouseenter(function(){
+              mouseOver = 1;
+              console.log("mouseOver");
+            }).mouseleave(function(){
+              mouseOver = 0;
+              console.log("mouse not Over");
+            });
 
             jQuery.contextMenu({
               selector: "#"+escapeId(node.name),
@@ -208,7 +215,38 @@ function initWindow() {
 	            parent: p
 	          });
           }
-        })
+        });
+        var mouseDown = 0;
+        var origX,origY;
+        var mouseOver = 0;
+        jQuery("#paper").mousedown(function(e){
+          mouseDown = 1;
+          origX = e.pageX, origY = e.pageY;
+        });
+        jQuery("#paper").mouseup(function(){
+          mouseDown = 0;
+        });
+        jQuery("#paper").mousemove(function(e){
+          if(mouseDown&&!mouseOver){
+            jQuery(document).moveNodes(e.pageX-origX, e.pageY-origY);
+            origX = e.pageX, origY = e.pageY;
+          }
+        });
+
+        /**
+         *
+         *
+         * @param dx change for x direction of mouse position (from last point the mousemove event called)
+         * @param dy change for y direction of mouse position
+         * @see movement of all the project nodes
+         */
+        jQuery.fn.moveNodes = function(dx,dy){
+          console.log(dx,dy);
+          jQuery("#paper > .window").each(function(){
+            jQuery(this).css({left:jQuery(this).position().left+dx+'px'});
+            jQuery(this).css({top:jQuery(this).position().top+dy+'px'});
+          });
+        }
 
         jsPlumb.makeTarget(jsPlumb.getSelector('.window'), {
           anchor : "Continuous"

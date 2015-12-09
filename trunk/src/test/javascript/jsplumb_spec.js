@@ -62,7 +62,7 @@ describe("graph view", function() {
 
   it ("test returns a mocked out graph for getJSON of graph.json" , function(){
     success = jasmine.createSpy('success');
-    
+
     jQuery.getJSON('graph.json', function(data) {
       success(data);
     });
@@ -110,10 +110,27 @@ describe("graph view", function() {
                       window.depview.paper.children("#test2"),
                       window.depview.paper.children("#test3")]
     });
-    
+
     it ("adds the test nodes via jquery", function() {
       jQuery.each(testElements, function(index, element) {
         expect(element.size()).toExist();
+      });
+    });
+  });
+
+  describe("move picture",function(){
+    it("move the all nodes in paper",function(){
+      var i = 0;
+      coordinates = []
+      $("#paper > .window").each(function(id,item){
+        coordinates[id] = {x:$(item).position().left,y:$(item).position().top};
+      });
+      jQuery(document).moveNodes(1,1);
+      i = 0;
+      $("#paper > .window").each(function(id,item){
+        expect(coordinates[id].x+1+'px').toEqual($(item)[0].style.left);
+        expect(coordinates[id].y+1+'px').toEqual($(item)[0].style.top);
+        i++;
       });
     });
   });
