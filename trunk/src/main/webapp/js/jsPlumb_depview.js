@@ -123,7 +123,8 @@ function initWindow() {
           newLeft = leftCurr + xDiff;
           newTop = topCurr + yDiff;
           $(allConns[i]).attr("style", "position:absolute;left:"+newLeft+"px;top:"+newTop+"px;");
-        }
+        }sa
+
       }
       jQuery.getJSON('graph.json', function(data) {
         var top = 3;
@@ -178,12 +179,21 @@ function initWindow() {
             jQuery("#" + escapeId(node.name) + " .fa-plus-circle").click(function(event) {
               showChildren(escapeId(node.name), data);
             });
+            jQuery("#" + escapeId(node.name)).mouseenter(function(){
+              mouseOver = 1;
+              console.log("mouseOver");
+            }).mouseleave(function(){
+              if(contextMenuClicked==0)mouseOver = 0;
+              console.log("mouse not Over");
+            });
 
             jQuery.contextMenu({
               selector: "#"+escapeId(node.name),
               className: 'custom-menu',
               position: function(opt, x, y){
                 opt.$menu.css({position: "absolute", top: y, left: x});
+                console.log("calllll");
+                contextMenuClicked=1;
               },
               items:{
                 buildopt: {name: "Build", callback: function buildfun(){
@@ -196,10 +206,25 @@ function initWindow() {
                   }
                   request.open(method, url, async);
                   request.send();
+                  contextMenuClicked=0;
+                  mouseOver = 0;
+                  mouseDown = 0;
                   return "built";
-                }},                
-                zoom: {name: "Zoom Out", callback: function() {$("#paper").animate({ 'zoom': 1 }, 'slow');}},
-                jim: {name: "Center View", callback: function(){$("#"+escapeId(node.name)).center();}}
+                }},
+                zoom: {name: "Zoom Out", callback: function() {
+                  $("#paper").each(function(){
+                    $(this).animate({ 'zoom': 1 }, 'slow');
+                    contextMenuClicked=0;
+                    mouseOver = 0;
+                    mouseDown = 0;
+                  });
+                }},
+                jim: {name: "Center View", callback: function(){
+                  $("#"+escapeId(node.name)).center();
+                  contextMenuClicked=0;
+                  mouseOver = 0;
+                  mouseDown = 0;
+                }}
               }
             });
           })
@@ -216,7 +241,40 @@ function initWindow() {
 	            parent: p
 	          });
           }
-        })
+        });
+        var contextMenuClicked=0;
+        var mouseDown = 0;
+        var origX,origY;
+        var mouseOver = 0;
+        jQuery("#paper").mousedown(function(e){
+          mouseDown = 1;
+          origX = e.pageX, origY = e.pageY;
+        });
+        jQuery("#paper").mouseup(function(){
+          mouseDown = 0;
+        });
+        jQuery("#paper").mousemove(function(e){
+          if(mouseDown&&!mouseOver&&!contextMenuClicked){
+            jQuery(document).moveNodes(e.pageX-origX, e.pageY-origY);
+            origX = e.pageX, origY = e.pageY;
+          }
+        });
+
+        /**
+         *
+         *
+         * @param dx change for x direction of mouse position (from last point the mousemove event called)
+         * @param dy change for y direction of mouse position
+         * @see movement of all the project nodes
+         */
+        jQuery.fn.moveNodes = function(dx,dy){
+          console.log(dx,dy);
+          jQuery("#paper > .window").each(function(){
+            jQuery(this).css({left:jQuery(this).position().left+dx+'px'});
+            jQuery(this).css({top:jQuery(this).position().top+dy+'px'});
+          });
+        }
+
 
         jsPlumb.makeTarget(jsPlumb.getSelector('.window'), {
           anchor : "Continuous"

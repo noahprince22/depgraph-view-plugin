@@ -100,6 +100,11 @@
           <artifactId>json-simple</artifactId>
           <version>1.1.1</version>
       </dependency>
+      <dependency>
+    		<groupId>log4j</groupId>
+    		<artifactId>log4j</artifactId>
+    		<version>1.2.17</version>
+    	</dependency>
   </dependencies>
   <build>
     <pluginManagement>
@@ -181,9 +186,12 @@
               <jsSrcDir> src/main/webapp/js/ </jsSrcDir>
               <preloadSources>
                 <source> vendor/jquery.js </source> 
+                <source> vendor/jquery.contextMenu.js </source> 
                 <source> vendor/jasmine-jquery.js </source> 
-                <source> vendor/jquery.powertip.min.js </source> 
-                <source>jquery.jsPlumb-1.4.1-all-min.js</source>
+                <source> vendor/jquery.contextMenu.js</source>
+                <source> vendor/jquery.ui.position.js </source> 
+                <source> vendor/jquery.powertip.min.js </source>
+                <source> jquery.jsPlumb-1.4.1-all-min.js </source>
                 <source> vendor/jquery.contextMenu.js</source>
                 <source> vendor/jquery.ui.position.js</source>
                 <source> jsPlumb_depview.js </source>
