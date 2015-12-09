@@ -192,21 +192,19 @@ function initWindow() {
         var origX,origY;
         var mouseOver = 0;
         jQuery("#paper").mousedown(function(e){
-          console.log("mousedown");
           mouseDown = 1;
           origX = e.pageX, origY = e.pageY;
         });
         jQuery("#paper").mouseup(function(){
           mouseDown = 0;
-          console.log("mouseup");
         });
         jQuery("#paper").mousemove(function(e){
           if(mouseDown&&!mouseOver){
-            moveNodes(e.pageX-origX, e.pageY-origY);
+            jQuery(document).moveNodes(e.pageX-origX, e.pageY-origY);
             origX = e.pageX, origY = e.pageY;
           }
         });
-        
+
         /**
          *
          *
@@ -214,12 +212,9 @@ function initWindow() {
          * @param dy change for y direction of mouse position
          * @see movement of all the project nodes
          */
-        function moveNodes(dx,dy){
+        jQuery.fn.moveNodes = function(dx,dy){
           console.log(dx,dy);
           jQuery("#paper > .window").each(function(){
-            console.log(jQuery(this));
-            console.log(jQuery(this).css("left"));
-            console.log(jQuery(this).css("top"));
             jQuery(this).css({left:jQuery(this).position().left+dx+'px'});
             jQuery(this).css({top:jQuery(this).position().top+dy+'px'});
           });
