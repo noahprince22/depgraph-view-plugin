@@ -174,7 +174,7 @@ function initWindow() {
               mouseOver = 1;
               console.log("mouseOver");
             }).mouseleave(function(){
-              mouseOver = 0;
+              if(contextMenuClicked==0)mouseOver = 0;
               console.log("mouse not Over");
             });
 
@@ -183,6 +183,8 @@ function initWindow() {
               className: 'custom-menu',
               position: function(opt, x, y){
                 opt.$menu.css({position: "absolute", top: y, left: x});
+                console.log("calllll");
+                contextMenuClicked=1;
               },
               items:{
                 buildopt: {name: "Build", callback: function buildfun(){
@@ -195,10 +197,25 @@ function initWindow() {
                   }
                   request.open(method, url, async);
                   request.send();
+                  contextMenuClicked=0;
+                  mouseOver = 0;
+                  mouseDown = 0;
                   return "built";
-                }},                
-                zoom: {name: "Zoom Out", callback: function() {$("#paper").animate({ 'zoom': 1 }, 'slow');}},
-                jim: {name: "Center View", callback: function(){$("#"+escapeId(node.name)).center();}}
+                }},
+                zoom: {name: "Zoom Out", callback: function() {
+                  $("#paper").each(function(){
+                    $(this).animate({ 'zoom': 1 }, 'slow');
+                    contextMenuClicked=0;
+                    mouseOver = 0;
+                    mouseDown = 0;
+                  });
+                }},
+                jim: {name: "Center View", callback: function(){
+                  $("#"+escapeId(node.name)).center();
+                  contextMenuClicked=0;
+                  mouseOver = 0;
+                  mouseDown = 0;
+                }}
               }
             });
           })
@@ -216,6 +233,7 @@ function initWindow() {
 	          });
           }
         });
+        var contextMenuClicked=0;
         var mouseDown = 0;
         var origX,origY;
         var mouseOver = 0;
@@ -227,7 +245,7 @@ function initWindow() {
           mouseDown = 0;
         });
         jQuery("#paper").mousemove(function(e){
-          if(mouseDown&&!mouseOver){
+          if(mouseDown&&!mouseOver&&!contextMenuClicked){
             jQuery(document).moveNodes(e.pageX-origX, e.pageY-origY);
             origX = e.pageX, origY = e.pageY;
           }

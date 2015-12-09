@@ -58,7 +58,6 @@
 		<script>
 			$(function(){
 				$(".ep").draggable();
-				//$("#paper").draggable();
 			});
 		</script>
                 <script type="text/javascript" src="${rootURL}/plugin/depgraph-view/js/vendor/jquery.contextMenu.js"></script>
