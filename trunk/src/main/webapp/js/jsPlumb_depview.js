@@ -173,6 +173,7 @@ function initWindow() {
 
             jQuery.contextMenu({
               selector: "#"+escapeId(node.name),
+              className: 'custom-menu',
               position: function(opt, x, y){
                 opt.$menu.css({position: "absolute", top: y, left: x});
               },
@@ -188,7 +189,7 @@ function initWindow() {
                   request.open(method, url, async);
                   request.send();
                   return "built";
-                }},
+                }},                
                 zoom: {name: "Zoom Out", callback: function() {$("#paper").animate({ 'zoom': 1 }, 'slow');}},
                 jim: {name: "Center View", callback: function(){$("#"+escapeId(node.name)).center();}}
               }
