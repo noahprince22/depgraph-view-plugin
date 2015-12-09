@@ -9,6 +9,47 @@ function getJobDiv(jobName) {
   return jQuery('#' + escapeId(jobName));
 }
 
+//Sets edge visibility
+function setEdgeVis(src, trg, setVis){
+  //query jsplumb edge
+  var allConns= jsPlumb.getAllConnections()
+  if (allConns['dep'] != undefined) {
+  var allConnsArray=allConns['dep']
+  //iterate through find right one
+  for(i = 0; i< allConnsArray.length; i++){
+    if(src==allConnsArray[i].source[0].id && trg == allConnsArray[i].target[0].id)
+    allConnsArray[i].setVisible(setVis)
+    }
+  }
+}
+
+function hideChildren(nodeName, data) {
+  jQuery.each(data["edges"], function(i, edge) {
+    if(edge.from == nodeName) {
+      jQuery("#" + escapeId(edge.to)).hide();
+      setEdgeVis(edge.from,edge.to, false) //hide edge
+      hideChildren(edge.to, data); // hide the children recursively
+    }
+  });
+
+  jQuery("#" + escapeId(nodeName) + " .fa-plus-circle").css("visibility", "visible");
+  $("#" + escapeId(nodeName) + " .fa-minus-circle").css("visibility", "hidden");
+};
+
+function showChildren(nodeName, data) {
+  jQuery.each(data["edges"], function(i, edge) {
+    if(edge.from == nodeName) {
+      jQuery("#" + escapeId(edge.to)).show();
+      setEdgeVis(edge.from,edge.to, true)//show edge
+      showChildren(edge.to, data); // show the children recursively
+
+    }
+  });
+
+  jQuery("#" + escapeId(nodeName) + " .fa-minus-circle").css("visibility", "visible");
+  $("#" + escapeId(nodeName) + " .fa-plus-circle").css("visibility", "hidden");
+}
+
 function initWindow() {
   window.depview = {
     paper: jQuery("#paper"),
@@ -29,16 +70,16 @@ function initWindow() {
           fillStyle : '#558822'
         } ],
         // blue endpoints 7px; green endpoints 7px.
-        Endpoints : [ [ "Dot", {
-          radius : 6
-        } ], [ "Dot", {
-          radius : 6
+        Endpoints : [ [ "Blank", {
+          radius : 0
+        } ], [ "Blank", {
+          radius : 0
         } ] ],
 
         // def for new connector (drag n' drop)
         // - line 2px
         PaintStyle : {
-          lineWidth : 2,
+          lineWidth : 1,
           strokeStyle : window.depview.colordep,
           joinstyle:"round"},
 
@@ -53,6 +94,37 @@ function initWindow() {
                              ]
 
       });
+      var nodeList = [];
+      jQuery.fn.center = function () {
+        //Calculate the clicked node distance from the chosen center point
+        var paperLeft = $('#paper').position().left;
+        var paperTop = $('#paper').position().top;
+        var centerLeft = ($('#paper').width()*.001)+paperLeft
+        var centerTop =($('#paper').height()*.001)+paperTop
+        var xDiff = centerLeft- $(this).position().left;
+        var yDiff = centerTop-$(this).position().top;
+        //loop through and change all nodes position relative to centerpoint
+        var arrayLength = nodeList.length;
+        for (var i = 0; i < arrayLength; i++) {
+          $("#"+nodeList[i]).css("position","absolute");
+          positionCurr = $("#"+nodeList[i]).position();
+          leftCurr  = positionCurr.left;
+          topCurr = positionCurr.top;
+          newLeft = leftCurr + xDiff;
+          newTop = topCurr + yDiff;
+          $("#"+nodeList[i]).css("left", newLeft+"px");
+          $("#"+nodeList[i]).css("top", newTop+"px");
+        }
+        var allConns= document.getElementsByClassName("_jsplumb_connector");
+        for(i = 0; i< allConns.length; i++){
+          positionCurr = $(allConns[i]).position();
+          leftCurr  = positionCurr.left;
+          topCurr = positionCurr.top;
+          newLeft = leftCurr + xDiff;
+          newTop = topCurr + yDiff;
+          $(allConns[i]).attr("style", "position:absolute;left:"+newLeft+"px;top:"+newTop+"px;");
+        }
+      }
       jQuery.getJSON('graph.json', function(data) {
         var top = 3;
         var space = 150;
@@ -62,12 +134,30 @@ function initWindow() {
         // iterate clusters
         jQuery.each(clusters, function(i, cluster) {
           jQuery.each(cluster.nodes, function(i,node) {
+            nodeList.push(escapeId(node.name));
             var nodeString = '<div>'
             var displayInfo = "test";
             if (window.depview.editEnabled) {
               nodeString = nodeString + '<div class="ep"/>';
             }
-            nodeString = nodeString + '<a href="' + node.url + '">' + node.name + '</a></div>'
+            nodeString = nodeString + '<a href="' + node.url + '">' + node.name + '</a></div>';
+            var minusIcon = "<a class=\"fa fa-lg fa-minus-circle\" " +
+                  "style=\"" +
+                  "position: absolute; " +
+                  "bottom: 0px; " +
+                  "left: 40%;" +
+                  "cursor: pointer\"" +
+                  "></a>";
+            var plusIcon = "<a class=\"fa fa-lg fa-plus-circle\" " +
+                  "style=\"" +
+                  "visibility: hidden;" +
+                  "position: absolute; " +
+                  "bottom: 0px; " +
+                  "left: 40%;" +
+                  "cursor: pointer\"" +
+                  "></a>";
+
+
             jQuery(nodeString).
               addClass('window').
               attr('id', escapeId(node.name)).
@@ -77,33 +167,46 @@ function initWindow() {
               css('background', node.color).
               powerTip({followMouse: true}).
               data('powertip', node.metadata).
+              append(minusIcon).
+              append(plusIcon).
               appendTo(window.depview.paper);
+
+            jQuery("#" + escapeId(node.name) + " .fa-minus-circle").click(function(event) {
+              hideChildren(escapeId(node.name), data);
+            });
+
+            jQuery("#" + escapeId(node.name) + " .fa-plus-circle").click(function(event) {
+              showChildren(escapeId(node.name), data);
+            });
+
             jQuery.contextMenu({
               selector: "#"+escapeId(node.name),
+              className: 'custom-menu',
               position: function(opt, x, y){
-                  opt.$menu.css({position: "absolute", top: y, left: x});
+                opt.$menu.css({position: "absolute", top: y, left: x});
               },
               items:{
-                  buildopt: {name: "Build", callback: function(){
-                    var url = node.url+"build?delay=0sec";
-                    var method = "POST";
-                    var async = true;
-                    var request = new XMLHttpRequest();
-                    request.onload = function(){
-                        console.log("Building");
-                    }
-                    request.open(method, url, async);
-                    request.send();
-                    return "built";
-                  }},
-                  zoom: {name: "Zoom Out", callback: function() {$("#paper").animate({ 'zoom': 1 }, 'slow');}},
-                  center: {name: "Center", callback: function(){alert("Center");}}
+                buildopt: {name: "Build", callback: function buildfun(){
+                  var url = node.url+"build?delay=0sec";
+                  var method = "POST";
+                  var async = true;
+                  var request = new XMLHttpRequest();
+                  request.onload = function(){
+                    console.log("Building");
+                  }
+                  request.open(method, url, async);
+                  request.send();
+                  return "built";
+                }},                
+                zoom: {name: "Zoom Out", callback: function() {$("#paper").animate({ 'zoom': 1 }, 'slow');}},
+                jim: {name: "Center View", callback: function(){$("#"+escapeId(node.name)).center();}}
               }
             });
           })
           top = top + cluster.vSize + space
           // xOverall = xOverall + cluster.hSize + space
         });
+
         // definitions for drag/drop connections
         jQuery(".ep").each(function(idx, current) {
           var p = jQuery(current).parent()
@@ -114,6 +217,7 @@ function initWindow() {
 	          });
           }
         })
+
         jsPlumb.makeTarget(jsPlumb.getSelector('.window'), {
           anchor : "Continuous"
         });
@@ -128,7 +232,7 @@ function initWindow() {
             source : from,
             target : to,
             scope: edge["type"],
-            paintStyle:{lineWidth : 2}
+            paintStyle:{lineWidth : 2},
           }
           if("copy" == edge["type"]){
             connOptions.paintStyle.strokeStyle = window.depview.colorcopy;
@@ -157,7 +261,11 @@ function initWindow() {
 	            });
             }
           }
+
         });
+
+
+
 
         if(window.depview.editEnabled) {
 	        jsPlumb.bind("jsPlumbConnection", function(info) {
@@ -199,6 +307,7 @@ function initWindow() {
 };
 
 initWindow();
+
 
 // start jsPlumb
 jsPlumb.bind("ready", function() {
