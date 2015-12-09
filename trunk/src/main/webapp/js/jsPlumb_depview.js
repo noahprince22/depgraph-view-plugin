@@ -13,12 +13,14 @@ function getJobDiv(jobName) {
 function setEdgeVis(src, trg, setVis){
   //query jsplumb edge
   var allConns= jsPlumb.getAllConnections()
+  if (allConns['dep'] != undefined) {
   var allConnsArray=allConns['dep']
   //iterate through find right one
   for(i = 0; i< allConnsArray.length; i++){
     if(src==allConnsArray[i].source[0].id && trg == allConnsArray[i].target[0].id)
     allConnsArray[i].setVisible(setVis)
     }
+  }
 }
 
 function hideChildren(nodeName, data) {
