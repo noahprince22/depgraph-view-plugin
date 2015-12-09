@@ -23,10 +23,9 @@
 package hudson.plugins.depgraph_view.model.operations;
 
 import hudson.model.AbstractProject;
+import jenkins.model.Jenkins;
 
 import java.io.IOException;
-
-import jenkins.model.Jenkins;
 
 public abstract class EdgeOperation {
     protected final AbstractProject<?, ?> source;

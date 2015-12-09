@@ -29,31 +29,23 @@ import com.google.inject.Injector;
 import hudson.model.AbstractProject;
 import hudson.model.FreeStyleProject;
 import hudson.plugins.depgraph_view.model.display.AbstractGraphStringGenerator;
-import hudson.plugins.depgraph_view.model.display.DotGeneratorFactory;
 import hudson.plugins.depgraph_view.model.display.GeneratorFactory;
 import hudson.plugins.depgraph_view.model.display.JsonGeneratorFactory;
 import hudson.tasks.BuildTrigger;
 import jenkins.model.Jenkins;
+import org.json.simple.parser.ParseException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.jvnet.hudson.test.JenkinsRule;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
 import static hudson.plugins.depgraph_view.model.graph.ProjectNode.node;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Iterator;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 public class GraphCalculatorTest {
     private FreeStyleProject project1;

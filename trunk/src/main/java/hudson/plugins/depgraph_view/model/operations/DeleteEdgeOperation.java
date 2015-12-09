@@ -24,10 +24,9 @@ package hudson.plugins.depgraph_view.model.operations;
 
 import hudson.model.Result;
 import hudson.tasks.BuildTrigger;
+import jenkins.model.Jenkins;
 
 import java.io.IOException;
-
-import jenkins.model.Jenkins;
 
 public class DeleteEdgeOperation extends EdgeOperation {
     

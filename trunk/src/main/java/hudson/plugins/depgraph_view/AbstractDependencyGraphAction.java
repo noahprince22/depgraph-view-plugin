@@ -43,7 +43,6 @@ import hudson.plugins.depgraph_view.model.operations.PutEdgeOperation;
 import hudson.util.LogTaskListener;
 import jenkins.model.Jenkins;
 import jenkins.model.ModelObjectWithContextMenu.ContextMenu;
-
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.StaplerResponse;
 

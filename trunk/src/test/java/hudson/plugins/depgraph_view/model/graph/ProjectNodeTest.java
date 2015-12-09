@@ -4,29 +4,23 @@ package hudson.plugins.depgraph_view.model.graph;
  * Created by wortman2 on 11/4/15.
  */
 
-import static org.junit.Assert.*;
-
-import hudson.model.AbstractProject;
-import hudson.model.FreeStyleProject;
-import hudson.model.FreeStyleBuild;
-import hudson.model.Result;
 import hudson.model.BallColor;
+import hudson.model.FreeStyleBuild;
+import hudson.model.FreeStyleProject;
+import hudson.model.Result;
 import hudson.tasks.Shell;
-import org.apache.tools.ant.Project;
-import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.jvnet.hudson.test.JenkinsRule;
 import org.jvnet.hudson.test.FailureBuilder;
+import org.jvnet.hudson.test.JenkinsRule;
 import org.jvnet.hudson.test.UnstableBuilder;
-import org.jvnet.hudson.test.recipes.LocalData;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
 import java.io.IOException;
-import java.lang.InterruptedException;
 import java.util.concurrent.ExecutionException;
-import jenkins.model.Jenkins;
+
 import static hudson.plugins.depgraph_view.model.graph.ProjectNode.node;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class ProjectNodeTest {
 //    private AbstractProject<?, ?> project;

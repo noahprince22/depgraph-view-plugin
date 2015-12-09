@@ -24,9 +24,9 @@ package hudson.plugins.depgraph_view.model.graph;
 
 import com.google.common.base.Preconditions;
 import hudson.model.AbstractProject;
-import hudson.model.Run;
 import hudson.model.Job;
-import java.util.Date;
+import hudson.model.Run;
+
 import java.util.ArrayList;
 import java.util.List;
 /**
