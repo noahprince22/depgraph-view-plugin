@@ -195,6 +195,8 @@
                 <source> vendor/jquery.contextMenu.js</source>
                 <source> vendor/jquery.ui.position.js</source>
                 <source> jsPlumb_depview.js </source>
+                <source> vendor/jquery.contextMenu.js</source>
+                <source> vendor/jquery.ui.position.js</source>
               </preloadSources>
               <sourceIncludes>
                 <include> vendor/jquery.js </include>

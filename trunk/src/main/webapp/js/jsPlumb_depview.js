@@ -123,9 +123,10 @@ function initWindow() {
           newLeft = leftCurr + xDiff;
           newTop = topCurr + yDiff;
           $(allConns[i]).attr("style", "position:absolute;left:"+newLeft+"px;top:"+newTop+"px;");
-        }sa
+        }
 
       }
+
       jQuery.getJSON('graph.json', function(data) {
         var top = 3;
         var space = 150;
@@ -225,6 +226,7 @@ function initWindow() {
                   mouseOver = 0;
                   mouseDown = 0;
                 }}
+
               }
             });
           })

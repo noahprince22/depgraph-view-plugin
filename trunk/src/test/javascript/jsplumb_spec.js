@@ -174,7 +174,48 @@ describe("graph view", function() {
     });
 
   });
+  describe ("context menu", function() {
+    beforeEach(function() {
+      jQuery(document.getElementById("test")).contextMenu();
+      
+    });
 
+
+    it("displays a context menu on right click", function(){
+      expect($(".context-menu-root")).toBeVisible();
+    });
+
+
+    it("builds on clicking build", function(){
+      expect($(".context-menu-root")).toBeVisible();
+      //jasmine.spyOn($, 'post');
+      $('.context-menu-item').eq(3).trigger('mouseup');
+
+      //$('.context-menu-item').eq(0).trigger('mouseup');
+      //expect($(".context-menu-root")).not.toBeVisible();
+      //expect(buildfun().toEqual("built"));
+      //debugger;
+    })
+
+    it("moves the node clicked to the picked center", function(){
+    	//debugger;
+      var clickedNodeName = basicGraph['clusters'][0]['nodes'][0]['name']
+      var paperLeft = $('#paper').position().left;
+      var centerLeft = ($('#paper').width()*.001)+paperLeft;
+      $("#"+clickedNodeName).center();
+      //debugger;
+      $("#"+clickedNodeName).center();
+      expect(parseFloat(($("#"+clickedNodeName)).position().left).toFixed(1)).
+      	toEqual(parseFloat(($('#paper').width()*.001)+paperLeft).toFixed(1));
+    });
+
+    it("Sets zoom to 1 on zoom out menu click", function(){
+      $("#paper").animate({ 'zoom': 1 }, 'slow');
+      //debugger;
+      expect($("#paper").css('zoom')).toEqual('1');
+    });
+
+  });
   describe ("tooltip on node hover", function() {
     it ("displays the powertip on hover with the correct data", function() {
       // There is currently no good way to test what happens when you 'hover'
