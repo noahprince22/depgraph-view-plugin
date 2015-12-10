@@ -184,10 +184,8 @@ function initWindow() {
             });
             jQuery("#" + escapeId(node.name)).mouseenter(function(){
               mouseOver = 1;
-              console.log("mouseOver");
             }).mouseleave(function(){
               if(contextMenuClicked==0)mouseOver = 0;
-              console.log("mouse not Over");
             });
 
             jQuery.contextMenu({
@@ -195,7 +193,6 @@ function initWindow() {
               className: 'custom-menu',
               position: function(opt, x, y){
                 opt.$menu.css({position: "absolute", top: y, left: x});
-                console.log("calllll");
                 contextMenuClicked=1;
               },
               items:{
@@ -272,7 +269,6 @@ function initWindow() {
          * @see movement of all the project nodes
          */
         jQuery.fn.moveNodes = function(dx,dy){
-          console.log(dx,dy);
           jQuery("#paper > .window").each(function(){
             jQuery(this).css({left:jQuery(this).position().left+dx+'px'});
             jQuery(this).css({top:jQuery(this).position().top+dy+'px'});
@@ -377,10 +373,12 @@ jsPlumb.bind("ready", function() {
   jsPlumb.setRenderMode(jsPlumb.SVG);
   depview.init();
 
-  jQuery("#paper").draggable();
+
+  //jQuery("#paper").draggable();
   jQuery("#paper").mousedown(function() {})
                   .mousemove(function() {
                     jsPlumb.repaintEverything();
                    });
 });
+
 
