@@ -152,12 +152,10 @@ describe("graph view", function() {
     });
 
     it("moves the node clicked to the picked center", function(){
-    	//debugger;
       var clickedNodeName = basicGraph['clusters'][0]['nodes'][0]['name']
       var paperLeft = jQuery('#paper').position().left;
       var centerLeft = (jQuery('#paper').width()*.001)+paperLeft;
       jQuery("#"+clickedNodeName).center();
-      //debugger;
       jQuery("#"+clickedNodeName).center();
       expect(parseFloat((jQuery("#"+clickedNodeName)).position().left).toFixed(0)).
       	toEqual(parseFloat((jQuery('#paper').width()*.001)+paperLeft).toFixed(0));
@@ -165,7 +163,6 @@ describe("graph view", function() {
 
     it("Sets zoom to 1 on zoom out menu click", function(){
       jQuery("#paper").animate({ 'zoom': 1 }, 'slow');
-      //debugger;
       expect(jQuery("#paper").css('zoom')).toEqual('1');
     });
 
