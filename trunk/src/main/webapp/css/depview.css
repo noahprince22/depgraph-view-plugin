@@ -117,3 +117,7 @@
 .gray {
   background: gray;
 }
+
+#outsidePaper {
+	overflow: hidden;
+}

@@ -33,7 +33,7 @@ function hideChildren(nodeName, data) {
   });
 
   jQuery("#" + escapeId(nodeName) + " .fa-plus-circle").css("visibility", "visible");
-  $("#" + escapeId(nodeName) + " .fa-minus-circle").css("visibility", "hidden");
+  jQuery("#" + escapeId(nodeName) + " .fa-minus-circle").css("visibility", "hidden");
 };
 
 function showChildren(nodeName, data) {
@@ -47,7 +47,7 @@ function showChildren(nodeName, data) {
   });
 
   jQuery("#" + escapeId(nodeName) + " .fa-minus-circle").css("visibility", "visible");
-  $("#" + escapeId(nodeName) + " .fa-plus-circle").css("visibility", "hidden");
+  jQuery("#" + escapeId(nodeName) + " .fa-plus-circle").css("visibility", "hidden");
 }
 
 function initWindow() {
@@ -56,6 +56,7 @@ function initWindow() {
     colordep: '#FF0000', // red
     colorcopy: '#32CD32', // green
     init : function() {
+
       jsPlumb.importDefaults({
         Connector : ["StateMachine", { curviness: 10 }],// Straight, Flowchart, Straight, Bezier
         // default drag options
@@ -368,7 +369,6 @@ function initWindow() {
 
 initWindow();
 
-
 // start jsPlumb
 jsPlumb.bind("ready", function() {
   // chrome fix.
@@ -376,4 +376,11 @@ jsPlumb.bind("ready", function() {
 
   jsPlumb.setRenderMode(jsPlumb.SVG);
   depview.init();
+
+  jQuery("#paper").draggable();
+  jQuery("#paper").mousedown(function() {})
+                  .mousemove(function() {
+                    jsPlumb.repaintEverything();
+                   });
 });
+

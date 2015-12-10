@@ -1,6 +1,7 @@
 describe("graph view", function() {
   var success;
   var testElements;
+  var draggableElementIds = [];
 
   // test2 -> test -> test3
   var basicGraph = {
@@ -98,7 +99,7 @@ describe("graph view", function() {
       });
 
       // We need to have a paper to work with for the tests
-      jQuery(document.body).prepend("<div id='paper'></div>");
+      jQuery(document.body).prepend("<div id=\"outerPaper\"><div id=\"paper\"></div><div>");
 
       // Init the window, which gets depview on it
       initWindow();
@@ -152,12 +153,10 @@ describe("graph view", function() {
     });
 
     it("moves the node clicked to the picked center", function(){
-    	//debugger;
       var clickedNodeName = basicGraph['clusters'][0]['nodes'][0]['name']
       var paperLeft = jQuery('#paper').position().left;
       var centerLeft = (jQuery('#paper').width()*.001)+paperLeft;
       jQuery("#"+clickedNodeName).center();
-      //debugger;
       jQuery("#"+clickedNodeName).center();
       expect(parseFloat((jQuery("#"+clickedNodeName)).position().left).toFixed(0)).
       	toEqual(parseFloat((jQuery('#paper').width()*.001)+paperLeft).toFixed(0));
@@ -165,7 +164,6 @@ describe("graph view", function() {
 
     it("Sets zoom to 1 on zoom out menu click", function(){
       jQuery("#paper").animate({ 'zoom': 1 }, 'slow');
-      //debugger;
       expect(jQuery("#paper").css('zoom')).toEqual('1');
     });
 

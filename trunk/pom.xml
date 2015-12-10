@@ -189,14 +189,11 @@
                 <source> vendor/jquery.contextMenu.js </source> 
                 <source> vendor/jasmine-jquery.js </source> 
                 <source> vendor/jquery.contextMenu.js</source>
-                <source> vendor/jquery.ui.position.js </source> 
-                <source> vendor/jquery.powertip.min.js </source>
+                <source> vendor/jquery.ui.position.js </source>
+                  <source> vendor/jquery.powertip.min.js </source>
                 <source> jquery.jsPlumb-1.4.1-all-min.js </source>
                 <source> jsPlumb_depview.js </source>
               </preloadSources>
-              <sourceIncludes>
-                <include> vendor/jquery.js </include>
-              </sourceIncludes>
               <debug>true</debug>
               <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
               <webDriverCapabilities>
