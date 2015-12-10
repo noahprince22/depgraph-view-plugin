@@ -96,6 +96,12 @@ function initWindow() {
 
       });
       var nodeList = [];
+      /**
+      * This function changes the top and left for the center function
+      * in the context menu.
+      * Loops through the array of nodes and edges and moves them a
+      * calculated offset. 
+      */
       jQuery.fn.center = function () {
         //Calculate the clicked node distance from the chosen center point
         var paperLeft = $('#paper').position().left;
@@ -187,6 +193,17 @@ function initWindow() {
             }).mouseleave(function(){
               if(contextMenuClicked==0)mouseOver = 0;
             });
+            //ContextMenu creation
+            //selector: binds the context menu to the node
+            //className: gives it a unique class name to call in tests
+            //position: sets position of the menu where the mouse is
+            //items: list of items in the menu
+            //buildopt: sends a post to the jenkins API, triggering 
+            //          a build when clicked
+            //zoom: zooms out to standard zoom (level 1)
+            //center: Centers the selected node in the center of
+            //        the window. Moves all nodes and edges in the 
+            //        current formation to the same relative place.
 
             jQuery.contextMenu({
               selector: "#"+escapeId(node.name),
@@ -219,7 +236,7 @@ function initWindow() {
                     mouseDown = 0;
                   });
                 }},
-                jim: {name: "Center View", callback: function(){
+                center: {name: "Center View", callback: function(){
                   $("#"+escapeId(node.name)).center();
                   contextMenuClicked=0;
                   mouseOver = 0;
